@@ -3,724 +3,1063 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LP Putting Tracker – Lee Peregrine Golf Academy</title>
+<title>LP Putting Tracker</title>
 <style>
-:root{--blue:#2456b4;--blue-dark:#1a3d8a;--blue-pale:#eaf1fb;--blue-mid:#c8d8f0;--blue-rule:#5b80cc;--accent:#f0a500;--off-white:#f7f9fd;--text:#1a1a2e;--text-light:#5a6a8a;--success:#1e8a4a;--danger:#c0392b;--border:#d0ddf5;--shadow:0 2px 16px rgba(36,86,180,0.10);--shadow-card:0 4px 24px rgba(36,86,180,0.13);--radius:12px;--radius-sm:7px;--challenge:#7b3fa0;--challenge-pale:#f3eafa;--challenge-mid:#d4b8ec;}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--off-white);color:var(--text);min-height:100vh;}
-header{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 100%);color:white;padding:18px 24px 16px;display:flex;align-items:center;gap:16px;box-shadow:0 3px 14px rgba(36,86,180,0.25);position:sticky;top:0;z-index:100;}
-.logo-mark{width:48px;height:48px;background:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:var(--blue);flex-shrink:0;letter-spacing:-1px;}
-.header-text h1{font-size:17px;font-weight:700;}
-.header-text p{font-size:11px;opacity:0.75;letter-spacing:0.08em;text-transform:uppercase;margin-top:1px;}
-.header-right{margin-left:auto;font-size:12px;opacity:0.7;text-align:right;}
-main{max-width:700px;margin:0 auto;padding:24px 16px 60px;}
-.steps{display:flex;margin-bottom:28px;background:white;border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow);}
-.step-item{flex:1;padding:12px 8px;text-align:center;font-size:11px;color:var(--text-light);border-right:1px solid var(--border);transition:background 0.2s,color 0.2s;}
-.step-item:last-child{border-right:none;}
-.step-item .step-num{width:22px;height:22px;border-radius:50%;background:var(--border);color:var(--text-light);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 4px;transition:background 0.2s,color 0.2s;}
-.step-item.active{background:var(--blue-pale);color:var(--blue);}
-.step-item.active .step-num{background:var(--blue);color:white;}
-.step-item.done{color:var(--success);}
-.step-item.done .step-num{background:var(--success);color:white;}
-.step-label{font-weight:600;}
-.card{background:white;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:20px;}
-.card-header{background:linear-gradient(90deg,var(--blue) 0%,var(--blue-rule) 100%);color:white;padding:14px 20px;font-size:14px;font-weight:700;display:flex;align-items:center;gap:10px;}
-.card-header.ch{background:linear-gradient(90deg,var(--challenge) 0%,#a05cc8 100%);}
-.card-body{padding:20px;}
-label{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;}
-input[type="text"],input[type="number"],select,textarea{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;color:var(--text);background:var(--off-white);transition:border-color 0.2s;outline:none;-webkit-appearance:none;}
-input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(36,86,180,0.10);background:white;}
-.form-row{margin-bottom:16px;}
-.form-hint{font-size:11px;color:var(--text-light);margin-top:4px;}
-.cat-tabs{display:flex;margin-bottom:20px;background:white;border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;box-shadow:var(--shadow);}
-.cat-tab{flex:1;padding:14px 10px;text-align:center;cursor:pointer;font-size:13px;font-weight:700;color:var(--text-light);border-right:1px solid var(--border);transition:all 0.18s;}
-.cat-tab:last-child{border-right:none;}
-.cat-tab.ap{background:var(--blue-pale);color:var(--blue);}
-.cat-tab.ac{background:var(--challenge-pale);color:var(--challenge);}
-.ct-icon{font-size:20px;display:block;margin-bottom:4px;}
-.game-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.game-btn{border:2px solid var(--border);border-radius:var(--radius-sm);padding:12px 10px;background:white;cursor:pointer;text-align:left;transition:all 0.18s;position:relative;}
-.game-btn:hover{border-color:var(--blue);background:var(--blue-pale);}
-.game-btn.selected{border-color:var(--blue);background:var(--blue-pale);}
-.game-btn.cb:hover{border-color:var(--challenge);background:var(--challenge-pale);}
-.game-btn.cb.selected{border-color:var(--challenge);background:var(--challenge-pale);}
-.game-btn.selected::after{content:'v';font-family:Arial;position:absolute;top:8px;right:10px;color:var(--blue);font-weight:700;font-size:14px;}
-.game-btn.cb.selected::after{color:var(--challenge);}
-.game-num{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px;}
-.cb .game-num{color:var(--challenge);}
-.game-name{font-size:13px;font-weight:700;color:var(--text);line-height:1.3;}
-.game-sub{font-size:11px;color:var(--text-light);margin-top:2px;}
-.level-pill{font-size:10px;background:var(--challenge-pale);color:var(--challenge);border-radius:10px;padding:2px 7px;font-weight:700;display:inline-block;margin-top:4px;}
-.game-desc{background:var(--blue-pale);border:1px solid var(--blue-mid);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:16px;font-size:13px;line-height:1.6;}
-.game-desc strong{color:var(--blue);}
-.game-desc.cd{background:var(--challenge-pale);border-color:var(--challenge-mid);}
-.game-desc.cd strong{color:var(--challenge);}
-.score-section{margin-bottom:18px;}
-.score-section h3{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:10px;border-bottom:2px solid var(--blue-mid);padding-bottom:6px;}
-.scoring-legend{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;}
-.sl-item{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 12px;font-size:11px;font-weight:600;}
-.sl-item span{color:var(--blue);font-weight:800;}
-.score-result{background:linear-gradient(135deg,var(--blue) 0%,var(--blue-dark) 100%);color:white;border-radius:var(--radius-sm);padding:16px 20px;margin:16px 0;display:flex;align-items:center;justify-content:space-between;}
-.score-result .sr-label{font-size:12px;opacity:0.8;}
-.score-result .sr-value{font-size:32px;font-weight:900;}
-.score-result .sr-rating{background:rgba(255,255,255,0.2);border-radius:20px;padding:4px 14px;font-size:12px;font-weight:700;}
-.score-result.world-class{background:linear-gradient(135deg,#1e6b3a 0%,#27ae60 100%);}
-.score-result.great{background:linear-gradient(135deg,#1a3d8a 0%,#2456b4 100%);}
-.score-result.good{background:linear-gradient(135deg,#c47d00 0%,#f0a500 100%);}
-.score-result.average{background:linear-gradient(135deg,#555 0%,#888 100%);}
-.putt-tracker{display:grid;gap:8px;}
-.pt-row{display:flex;align-items:center;gap:8px;background:var(--off-white);border-radius:var(--radius-sm);padding:8px 12px;border:1px solid var(--border);}
-.pt-label{font-size:12px;font-weight:700;min-width:90px;}
-.pt-label small{display:block;font-size:10px;font-weight:400;color:var(--text-light);}
-.pt-buttons{display:flex;gap:6px;flex-wrap:wrap;}
-.pt-btn{border:2px solid var(--border);border-radius:var(--radius-sm);padding:5px 10px;background:white;cursor:pointer;font-size:12px;font-weight:600;color:var(--text-light);transition:all 0.12s;min-width:36px;text-align:center;}
-.pt-btn.sm{border-color:var(--success);background:var(--success);color:white;}
-.pt-btn.ms{border-color:var(--danger);background:var(--danger);color:white;}
-.pt-btn.sl{border-color:var(--blue);background:var(--blue);color:white;}
-.ladder-section{margin-bottom:20px;}
-.lad-prog{background:var(--off-white);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
-.lp-bar-wrap{flex:1;background:var(--border);border-radius:10px;height:10px;overflow:hidden;}
-.lp-bar{background:linear-gradient(90deg,var(--challenge),#a05cc8);height:100%;border-radius:10px;transition:width 0.4s;}
-.lp-text{font-size:12px;font-weight:700;color:var(--challenge);white-space:nowrap;}
-.lad-grid{display:grid;gap:6px;}
-.lad-lv{display:flex;align-items:center;gap:10px;border:2px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;background:white;transition:all 0.18s;}
-.lad-lv.done{background:#e8f7ee;border-color:var(--success);}
-.ll-num{width:32px;height:32px;border-radius:50%;background:var(--border);color:var(--text-light);font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.lad-lv.done .ll-num{background:var(--success);color:white;}
-.ll-info{flex:1;}
-.ll-title{font-size:13px;font-weight:700;}
-.ll-desc{font-size:11px;color:var(--text-light);margin-top:2px;}
-.ll-date{font-size:11px;color:var(--success);font-weight:600;white-space:nowrap;}
-.ll-actions{display:flex;gap:6px;}
-.ll-btn{border:none;border-radius:var(--radius-sm);padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;transition:all 0.15s;}
-.ll-do{background:var(--challenge);color:white;}
-.ll-do:hover{background:#6a2d8a;}
-.ll-un{background:var(--off-white);color:var(--text-light);border:1px solid var(--border);}
-.ll-un:hover{color:var(--danger);}
-.dice-box{background:var(--challenge-pale);border:1px solid var(--challenge-mid);border-radius:var(--radius-sm);padding:12px 14px;margin:12px 0;}
-.dice-box h4{font-size:12px;font-weight:700;color:var(--challenge);margin-bottom:8px;}
-.dice-row{display:flex;gap:8px;align-items:center;padding:4px 0;font-size:12px;}
-.dice-face{font-size:18px;width:28px;text-align:center;flex-shrink:0;}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;border:none;transition:all 0.18s;}
-.btn-primary{background:var(--blue);color:white;}
-.btn-primary:hover{background:var(--blue-dark);}
-.btn-secondary{background:var(--blue-pale);color:var(--blue);border:1.5px solid var(--blue-mid);}
-.btn-secondary:hover{background:var(--blue-mid);}
-.btn-success{background:var(--success);color:white;}
-.btn-accent{background:var(--accent);color:white;}
-.btn-danger{background:var(--danger);color:white;}
-.btn-challenge{background:var(--challenge);color:white;}
-.btn-challenge:hover{background:#6a2d8a;}
-.btn-lg{padding:14px 28px;font-size:15px;}
-.btn-sm{padding:8px 14px;font-size:12px;}
-.btn-full{width:100%;}
-.btn-group{display:flex;gap:10px;flex-wrap:wrap;}
-.btn-group .btn{flex:1;min-width:120px;}
-.result-header{text-align:center;padding:24px 20px 16px;background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 100%);color:white;border-radius:var(--radius) var(--radius) 0 0;}
-.player-name{font-size:22px;font-weight:900;}
-.game-title{font-size:14px;opacity:0.8;margin-top:4px;}
-.date-time{font-size:11px;opacity:0.6;margin-top:6px;}
-.result-detail{padding:20px;}
-.detail-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;}
-.detail-row:last-child{border-bottom:none;}
-.dr-label{color:var(--text-light);}
-.dr-value{font-weight:700;}
-.history-table{width:100%;border-collapse:collapse;font-size:12px;}
-.history-table th{background:var(--blue);color:white;padding:8px 10px;text-align:left;font-size:11px;text-transform:uppercase;}
-.history-table td{padding:8px 10px;border-bottom:1px solid var(--border);}
-.history-table tr:hover td{background:var(--blue-pale);}
-.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;text-transform:uppercase;}
-.bwc{background:#e8f7ee;color:var(--success);}
-.bgr{background:var(--blue-pale);color:var(--blue);}
-.bgo{background:#fff8e6;color:#b07800;}
-.bav{background:#f0f0f0;color:#666;}
-.bch{background:var(--challenge-pale);color:var(--challenge);}
-.section{display:none;}
-.section.active{display:block;}
-.hole-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;}
-.hole-table th{background:var(--blue);color:white;padding:7px 8px;text-align:center;font-size:11px;}
-.hole-table td{padding:7px 8px;border-bottom:1px solid var(--border);text-align:center;}
-.hole-table tr:nth-child(even) td{background:var(--off-white);}
-.hole-table td:first-child{font-weight:700;color:var(--blue);}
-.hi{width:50px!important;padding:5px!important;text-align:center;font-size:13px;font-weight:700;}
-.divider{height:1px;background:var(--border);margin:16px 0;}
-.mt-4{margin-top:16px;}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--success);color:white;padding:12px 24px;border-radius:30px;font-size:13px;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:transform 0.3s;z-index:999;white-space:nowrap;}
-.toast.show{transform:translateX(-50%) translateY(0);}
-.toast.err{background:var(--danger);}
-@media(max-width:480px){.game-grid{grid-template-columns:1fr;}.btn-group{flex-direction:column;}header{padding:14px 16px 12px;}.logo-mark{width:40px;height:40px;font-size:15px;}.hi{width:40px!important;}}
+:root {
+  --blue: #2456b4; --blue-dark: #1a3d8a; --blue-pale: #eaf1fb;
+  --blue-mid: #c8d8f0; --blue-rule: #5b80cc; --accent: #f0a500;
+  --off: #f7f9fd; --text: #1a1a2e; --mute: #5a6a8a;
+  --green: #1e8a4a; --green-bg: #e8f7ee;
+  --red: #c0392b; --red-bg: #fdecea;
+  --border: #d0ddf5; --sh: 0 2px 16px rgba(36,86,180,.10);
+  --shc: 0 4px 24px rgba(36,86,180,.13);
+  --r: 12px; --rs: 7px;
+  --pur: #7b3fa0; --pur-pale: #f3eafa; --pur-mid: #d4b8ec;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Segoe UI", system-ui, sans-serif; background: var(--off); color: var(--text); min-height: 100vh; }
+
+/* HEADER */
+header { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); color: #fff; padding: 14px 20px; display: flex; align-items: center; gap: 14px; box-shadow: 0 3px 14px rgba(36,86,180,.25); position: sticky; top: 0; z-index: 200; }
+.hlogo { width: 46px; height: 46px; border-radius: 50%; object-fit: contain; background: white; flex-shrink: 0; }
+.htxt h1 { font-size: 16px; font-weight: 700; }
+.htxt p { font-size: 10px; opacity: .7; text-transform: uppercase; letter-spacing: .07em; margin-top: 1px; }
+.hright { margin-left: auto; font-size: 11px; opacity: .7; text-align: right; line-height: 1.4; }
+
+main { max-width: 680px; margin: 0 auto; padding: 20px 14px 60px; }
+
+/* STEPS */
+.steps { display: flex; background: white; border-radius: var(--r); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--sh); margin-bottom: 24px; }
+.si { flex: 1; padding: 11px 6px; text-align: center; font-size: 10px; color: var(--mute); border-right: 1px solid var(--border); transition: .2s; }
+.si:last-child { border-right: none; }
+.si .sn { width: 20px; height: 20px; border-radius: 50%; background: var(--border); color: var(--mute); font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 3px; transition: .2s; }
+.si.act { background: var(--blue-pale); color: var(--blue); }
+.si.act .sn { background: var(--blue); color: white; }
+.si.done { color: var(--green); }
+.si.done .sn { background: var(--green); color: white; }
+.si .sl { font-weight: 700; font-size: 10px; }
+
+/* CARDS */
+.card { background: white; border-radius: var(--r); border: 1px solid var(--border); box-shadow: var(--shc); overflow: hidden; margin-bottom: 18px; }
+.ch { background: linear-gradient(90deg, var(--blue), var(--blue-rule)); color: white; padding: 13px 18px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.ch.pur { background: linear-gradient(90deg, var(--pur), #a05cc8); }
+.cb { padding: 18px; }
+
+/* FORMS */
+label { display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+input[type=text], input[type=number], textarea {
+  width: 100%; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: var(--rs);
+  font-size: 13px; color: var(--text); background: var(--off); outline: none; -webkit-appearance: none; transition: border .2s;
+}
+input:focus, textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(36,86,180,.10); background: white; }
+.fr { margin-bottom: 14px; }
+.fh { font-size: 10px; color: var(--mute); margin-top: 3px; }
+
+/* CAT TABS */
+.ctabs { display: flex; background: white; border-radius: var(--r); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--sh); margin-bottom: 18px; }
+.ctab { flex: 1; padding: 13px 8px; text-align: center; cursor: pointer; font-size: 12px; font-weight: 700; color: var(--mute); border-right: 1px solid var(--border); transition: .18s; line-height: 1.3; }
+.ctab:last-child { border-right: none; }
+.ctab.ap { background: var(--blue-pale); color: var(--blue); }
+.ctab.ac { background: var(--pur-pale); color: var(--pur); }
+.ctab .ci { font-size: 22px; display: block; margin-bottom: 4px; }
+
+/* GAME GRID */
+.gg { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.gb { border: 2px solid var(--border); border-radius: var(--rs); padding: 11px 10px; background: white; cursor: pointer; text-align: left; transition: .18s; position: relative; }
+.gb:hover { border-color: var(--blue); background: var(--blue-pale); }
+.gb.sel { border-color: var(--blue); background: var(--blue-pale); }
+.gb.pur:hover { border-color: var(--pur); background: var(--pur-pale); }
+.gb.pur.sel { border-color: var(--pur); background: var(--pur-pale); }
+.gb.sel:after { content: "✓"; position: absolute; top: 7px; right: 9px; font-weight: 700; font-size: 13px; color: var(--blue); }
+.gb.pur.sel:after { color: var(--pur); }
+.gn { font-size: 9px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 2px; }
+.gb.pur .gn { color: var(--pur); }
+.gname { font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.3; }
+.gsub { font-size: 10px; color: var(--mute); margin-top: 2px; }
+.lpill { font-size: 9px; background: var(--pur-pale); color: var(--pur); border-radius: 10px; padding: 2px 6px; font-weight: 700; display: inline-block; margin-top: 3px; }
+
+/* DESC BOX */
+.desc { background: var(--blue-pale); border: 1px solid var(--blue-mid); border-radius: var(--rs); padding: 12px 14px; margin-bottom: 14px; font-size: 12px; line-height: 1.6; }
+.desc strong { color: var(--blue); }
+.desc.pur { background: var(--pur-pale); border-color: var(--pur-mid); }
+.desc.pur strong { color: var(--pur); }
+
+/* SCORING LEGEND */
+.sleg { display: flex; gap: 7px; flex-wrap: wrap; margin: 8px 0 14px; }
+.sli { background: var(--off); border: 1px solid var(--border); border-radius: var(--rs); padding: 5px 10px; font-size: 10px; font-weight: 600; }
+.sli span { color: var(--blue); font-weight: 800; }
+
+/* PUTT TRACKER */
+.ptrack { display: grid; gap: 7px; }
+.prow { display: flex; align-items: center; gap: 8px; background: var(--off); border-radius: var(--rs); padding: 7px 10px; border: 1px solid var(--border); }
+.plabel { font-size: 11px; font-weight: 700; min-width: 80px; }
+.plabel small { display: block; font-size: 10px; font-weight: 400; color: var(--mute); }
+.pbtns { display: flex; gap: 5px; flex-wrap: wrap; }
+.pbtn { border: 2px solid var(--border); border-radius: var(--rs); padding: 5px 9px; background: white; cursor: pointer; font-size: 11px; font-weight: 600; color: var(--mute); transition: .12s; min-width: 34px; text-align: center; }
+.pbtn.make { border-color: var(--green); background: var(--green); color: white; }
+.pbtn.miss { border-color: var(--red); background: var(--red); color: white; }
+.pbtn.pick { border-color: var(--blue); background: var(--blue); color: white; }
+.live-count { font-size: 12px; color: var(--mute); margin-top: 8px; }
+.live-count strong { color: var(--text); }
+
+/* SCORE RESULT BANNER */
+.banner { border-radius: var(--rs); padding: 14px 18px; margin: 14px 0; display: flex; align-items: center; justify-content: space-between; color: white; }
+.banner.blue { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); }
+.banner.green { background: linear-gradient(135deg, #1e6b3a, #27ae60); }
+.banner.gold { background: linear-gradient(135deg, #b07800, var(--accent)); }
+.banner.grey { background: linear-gradient(135deg, #555, #888); }
+.bv { font-size: 30px; font-weight: 900; }
+.bl { font-size: 11px; opacity: .8; }
+.br { background: rgba(255,255,255,.2); border-radius: 20px; padding: 3px 12px; font-size: 11px; font-weight: 700; }
+
+/* RESULT HEADER */
+.rhead { text-align: center; padding: 22px 18px 14px; background: linear-gradient(135deg, var(--blue-dark), var(--blue)); color: white; }
+.rpname { font-size: 20px; font-weight: 900; }
+.rgame { font-size: 13px; opacity: .8; margin-top: 3px; }
+.rdate { font-size: 10px; opacity: .6; margin-top: 5px; }
+.rdetail { padding: 16px 18px; }
+.drow { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+.drow:last-child { border-bottom: none; }
+.dl { color: var(--mute); }
+.dv { font-weight: 700; }
+
+/* CHALLENGE LADDER */
+.ladprog { background: var(--off); border: 1px solid var(--border); border-radius: var(--rs); padding: 11px 14px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.barwrap { flex: 1; background: var(--border); border-radius: 10px; height: 9px; overflow: hidden; }
+.bar { background: linear-gradient(90deg, var(--pur), #a05cc8); height: 100%; border-radius: 10px; transition: width .4s; }
+.barlab { font-size: 11px; font-weight: 700; color: var(--pur); white-space: nowrap; }
+.ladgrid { display: grid; gap: 6px; }
+.ladlv { display: flex; align-items: center; gap: 9px; border: 2px solid var(--border); border-radius: var(--rs); padding: 9px 12px; background: white; }
+.ladlv.done { background: var(--green-bg); border-color: var(--green); }
+.lvnum { width: 30px; height: 30px; border-radius: 50%; background: var(--border); color: var(--mute); font-size: 12px; font-weight: 900; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ladlv.done .lvnum { background: var(--green); color: white; }
+.lvinfo { flex: 1; }
+.lvtitle { font-size: 12px; font-weight: 700; }
+.lvdesc { font-size: 10px; color: var(--mute); margin-top: 2px; }
+.lvdate { font-size: 10px; color: var(--green); font-weight: 600; white-space: nowrap; }
+.lvbtns { display: flex; gap: 5px; }
+.lvbtn { border: none; border-radius: var(--rs); padding: 5px 10px; font-size: 10px; font-weight: 700; cursor: pointer; }
+.lvdo { background: var(--pur); color: white; }
+.lvdo:hover { background: #6a2d8a; }
+.lvun { background: var(--off); color: var(--mute); border: 1px solid var(--border); }
+.lvun:hover { color: var(--red); }
+
+/* DICE BOX */
+.dicebox { background: var(--pur-pale); border: 1px solid var(--pur-mid); border-radius: var(--rs); padding: 11px 13px; margin: 10px 0; }
+.dicebox h4 { font-size: 11px; font-weight: 700; color: var(--pur); margin-bottom: 7px; }
+.dicerow { display: flex; gap: 7px; align-items: center; padding: 3px 0; font-size: 11px; }
+.diceface { font-size: 17px; width: 26px; text-align: center; flex-shrink: 0; }
+
+/* HOLE TABLE */
+.htable { width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 10px; }
+.htable th { background: var(--blue); color: white; padding: 7px 7px; text-align: center; font-size: 10px; }
+.htable td { padding: 6px 7px; border-bottom: 1px solid var(--border); text-align: center; }
+.htable tr:nth-child(even) td { background: var(--off); }
+.htable td:first-child { font-weight: 700; color: var(--blue); }
+.hi { width: 44px !important; padding: 5px 4px !important; text-align: center; font-size: 13px; font-weight: 700; }
+
+/* BUTTONS */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 11px 20px; border-radius: var(--rs); font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: .18s; }
+.btn-blue { background: var(--blue); color: white; }
+.btn-blue:hover { background: var(--blue-dark); }
+.btn-sec { background: var(--blue-pale); color: var(--blue); border: 1.5px solid var(--blue-mid); }
+.btn-sec:hover { background: var(--blue-mid); }
+.btn-green { background: var(--green); color: white; }
+.btn-green:hover { background: #166638; }
+.btn-gold { background: var(--accent); color: white; }
+.btn-red { background: var(--red); color: white; }
+.btn-pur { background: var(--pur); color: white; }
+.btn-pur:hover { background: #6a2d8a; }
+.btn-lg { padding: 13px 26px; font-size: 14px; }
+.btn-full { width: 100%; }
+.btn-sm { padding: 7px 13px; font-size: 11px; }
+.bgroup { display: flex; gap: 9px; flex-wrap: wrap; }
+.bgroup .btn { flex: 1; min-width: 110px; }
+
+/* SECTIONS */
+.sec { display: none; }
+.sec.act { display: block; }
+
+/* HISTORY TABLE */
+.htbl { width: 100%; border-collapse: collapse; font-size: 11px; }
+.htbl th { background: var(--blue); color: white; padding: 7px 9px; text-align: left; font-size: 10px; text-transform: uppercase; }
+.htbl td { padding: 7px 9px; border-bottom: 1px solid var(--border); }
+.htbl tr:hover td { background: var(--blue-pale); }
+.badge { display: inline-block; padding: 2px 7px; border-radius: 9px; font-size: 9px; font-weight: 700; text-transform: uppercase; }
+.bwc { background: var(--green-bg); color: var(--green); }
+.bgr { background: var(--blue-pale); color: var(--blue); }
+.bgo { background: #fff8e6; color: #b07800; }
+.bav { background: #f0f0f0; color: #666; }
+.bch { background: var(--pur-pale); color: var(--pur); }
+
+/* DICE MODAL */
+.moverlay { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 500; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.mbox { background: white; border-radius: var(--r); max-width: 400px; width: 100%; box-shadow: 0 8px 40px rgba(0,0,0,.3); overflow: hidden; animation: popIn .22s ease; }
+@keyframes popIn { from { transform: scale(.86); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.mhead { background: linear-gradient(90deg, var(--pur), #a05cc8); color: white; padding: 14px 18px; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.mbody { padding: 20px; }
+.dicebig { font-size: 68px; text-align: center; margin: 10px 0; animation: rollIn .35s ease; }
+@keyframes rollIn { from { transform: rotate(-25deg) scale(.5); opacity: 0; } to { transform: rotate(0) scale(1); opacity: 1; } }
+.dicetask { background: var(--pur-pale); border: 2px solid var(--pur-mid); border-radius: var(--rs); padding: 13px 15px; text-align: center; font-size: 14px; font-weight: 700; color: var(--pur); margin: 10px 0; line-height: 1.4; }
+.mq { font-size: 12px; color: var(--mute); text-align: center; margin-bottom: 14px; }
+.mbtns { display: flex; gap: 9px; }
+.mbtns .btn { flex: 1; }
+
+/* UTILS */
+.div { height: 1px; background: var(--border); margin: 14px 0; }
+.mt { margin-top: 14px; }
+
+@media (max-width: 480px) {
+  .gg { grid-template-columns: 1fr; }
+  .bgroup { flex-direction: column; }
+  header { padding: 12px 14px; }
+  .hlogo { width: 38px; height: 38px; }
+}
 </style>
 </head>
 <body>
+
 <header>
-  <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAH4AfgDACIAAREBAhEB/9sAQwAIBgYHBgUIBwcHCQkICgwUDQwLCwwZEhMPFB0aHx4dGhwcICQuJyAiLCMcHCg3KSwwMTQ0NB8nOT04MjwuMzQy/9sAQwEJCQkMCwwYDQ0YMiEcITIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIy/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMAAAERAhEAPwD36iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBRRQKKAEooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAUUUCigBKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAFFFAooASiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBRRQKKAEooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAUUUCigBKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAFFFAooASiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiikZlUZZgB6k0ALRVSTVLCI4e8gB9N4qI61YD7szP/uRs38hVRjKWyJclHdmhRWadbg/ht7t/pA39ajOvRD/lzvfxiqvY1P5X9xPtaf8AMjWorIHiCD+K2ul+sf8A9el/4SKwH3jKv1Sj2VT+V/cHtYfzI1qKz01zTnxi6Uf7wI/pVqO7tpf9XPG30YVDjKO6LUk9mTUUUUhhRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAoooFFACUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRUVzOttbSTP0Rc/WgCWiuaHiSdj/AKmP8zUi+IJz1hj/AFrf6tV7GH1in3OhprukSM8jKiKMlmOABWIuuynrElalpMbu23yRgBsjHUEVEqU4q7RcasJO0WV49atrkkWS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" alt="LP Golf Academy" style="width:48px;height:48px;border-radius:50%;object-fit:contain;background:white;flex-shrink:0;">
-  <div class="header-text"><h1>Lee Peregrine Golf Academy</h1><p>Putting Performance Tracker</p></div>
-  <div class="header-right" id="headerInfo"></div>
+  <img class="hlogo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAH4AfgDACIAAREBAhEB/9sAQwAIBgYHBgUIBwcHCQkICgwUDQwLCwwZEhMPFB0aHx4dGhwcICQuJyAiLCMcHCg3KSwwMTQ0NB8nOT04MjwuMzQy/9sAQwEJCQkMCwwYDQ0YMiEcITIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIy/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMAAAERAhEAPwD36iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBRRQKKAEooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAUUUCigBKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAFFFAooASiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBRRQKKAEooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAUUUCigBKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAFFFAooASiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiikZlUZZgB6k0ALRVSTVLCI4e8gB9N4qI61YD7szP/uRs38hVRjKWyJclHdmhRWadbg/ht7t/pA39ajOvRD/lzvfxiqvY1P5X9xPtaf8AMjWorIHiCD+K2ul+sf8A9el/4SKwH3jKv1Sj2VT+V/cHtYfzI1qKz01zTnxi6Uf7wI/pVqO7tpf9XPG30YVDjKO6LUk9mTUUUUhhRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAoooFFACUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRUVzOttbSTP0Rc/WgCWiuaHiSdj/AKmP8zUi+IJz1hj/AFrf6tV7GH1in3OhprukSM8jKiKMlmOABWIuuynrElalpMbu23yRgBsjHUEVEqU4q7RcasJO0WV49atrkkWS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" alt="LP Golf Academy">
+  <div class="htxt">
+    <h1>Lee Peregrine Golf Academy</h1>
+    <p>Putting Performance Tracker</p>
+  </div>
+  <div class="hright" id="hinfo"></div>
 </header>
+
 <main>
-  <div class="steps">
-    <div class="step-item active" id="s1"><div class="step-num">1</div><div class="step-label">Spieler</div></div>
-    <div class="step-item" id="s2"><div class="step-num">2</div><div class="step-label">Spiel</div></div>
-    <div class="step-item" id="s3"><div class="step-num">3</div><div class="step-label">Ergebnis</div></div>
-    <div class="step-item" id="s4"><div class="step-num">4</div><div class="step-label">Speichern</div></div>
+
+<!-- STEP BAR -->
+<div class="steps">
+  <div class="si act" id="s1"><div class="sn">1</div><div class="sl">Spieler</div></div>
+  <div class="si" id="s2"><div class="sn">2</div><div class="sl">Spiel</div></div>
+  <div class="si" id="s3"><div class="sn">3</div><div class="sl">Ergebnis</div></div>
+  <div class="si" id="s4"><div class="sn">4</div><div class="sl">Speichern</div></div>
+</div>
+
+<!-- SEC 1: PLAYER -->
+<div class="sec act" id="sec1">
+  <div class="card">
+    <div class="ch">&#128100; Spieler</div>
+    <div class="cb">
+      <div class="fr"><label>Name des Spielers</label><input type="text" id="playerName" placeholder="z.B. Max Mustermann"></div>
+      <div class="fr"><label>Datum</label><input type="text" id="dateField" readonly><div class="fh">Wird automatisch eingetragen</div></div>
+      <button class="btn btn-blue btn-full btn-lg mt" onclick="go2()">Weiter &#8594; Spiel w&#228;hlen</button>
+    </div>
+  </div>
+  <div class="card" id="histCard" style="display:none">
+    <div class="ch">&#128202; Letzte Ergebnisse</div>
+    <div style="overflow-x:auto"><table class="htbl"><thead><tr><th>Datum</th><th>Spieler</th><th>Spiel</th><th>Score</th><th>Rating</th></tr></thead><tbody id="histBody"></tbody></table></div>
+    <div style="padding:10px 14px;display:flex;gap:7px;flex-wrap:wrap">
+      <button class="btn btn-sec btn-sm" onclick="exportAll()">&#128229; Alle CSV</button>
+      <button class="btn btn-red btn-sm" onclick="clearHist()">&#128465; L&#246;schen</button>
+    </div>
+  </div>
+</div>
+
+<!-- SEC 2: GAME SELECT -->
+<div class="sec" id="sec2">
+  <div class="card">
+    <div class="ch">&#127919; Spieltyp w&#228;hlen</div>
+    <div class="cb" style="padding-bottom:8px">
+      <div class="ctabs">
+        <div class="ctab ap" id="tabP" onclick="showCat('p')"><span class="ci">&#128202;</span>Performance Spiele<br><small style="font-weight:400;font-size:9px">Score &amp; Ergebnis</small></div>
+        <div class="ctab" id="tabC" onclick="showCat('c')"><span class="ci">&#127942;</span>Challenge Leitern<br><small style="font-weight:400;font-size:9px">Level aufsteigen</small></div>
+      </div>
+    </div>
   </div>
 
-  <!-- SEC 1 -->
-  <div class="section active" id="sec1">
+  <div id="catP">
     <div class="card">
-      <div class="card-header"><span>&#128100;</span> Spieler</div>
-      <div class="card-body">
-        <div class="form-row"><label>Name des Spielers</label><input type="text" id="playerName" placeholder="z.B. Max Mustermann"></div>
-        <div class="form-row"><label>Datum</label><input type="text" id="sessionDate" readonly><div class="form-hint">Automatisch</div></div>
-        <button class="btn btn-primary btn-full btn-lg mt-4" onclick="goToStep2()">Weiter &#8594; Spiel w&#228;hlen</button>
-      </div>
-    </div>
-    <div class="card" id="historyCard" style="display:none">
-      <div class="card-header"><span>&#128202;</span> Letzte Ergebnisse</div>
-      <div class="card-body" style="padding:0">
-        <div style="overflow-x:auto"><table class="history-table"><thead><tr><th>Datum</th><th>Spieler</th><th>Spiel</th><th>Score</th><th>Rating</th></tr></thead><tbody id="historyBody"></tbody></table></div>
-        <div style="padding:12px 16px;display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn btn-secondary btn-sm" onclick="exportAllCSV()">&#128229; Alle CSV</button>
-          <button class="btn btn-danger btn-sm" onclick="clearHistory()">&#128465; L&#246;schen</button>
+      <div class="ch">&#9971; Jankowski &#8211; Performance Games</div>
+      <div class="cb">
+        <div class="gg">
+          <button class="gb" onclick="selG('j1')" id="gb_j1"><div class="gn">JJ 01</div><div class="gname">Must Make</div><div class="gsub">3&#8211;6ft &middot; 20 Putts</div></button>
+          <button class="gb" onclick="selG('j2')" id="gb_j2"><div class="gn">JJ 02</div><div class="gname">Good Chances</div><div class="gsub">6&#8211;15ft &middot; 16 Putts</div></button>
+          <button class="gb" onclick="selG('j3')" id="gb_j3"><div class="gn">JJ 03</div><div class="gname">Outside Chance</div><div class="gsub">12&#8211;21ft &middot; vs Par</div></button>
+          <button class="gb" onclick="selG('j4')" id="gb_j4"><div class="gn">JJ 04</div><div class="gname">Proximity</div><div class="gsub">Speed Control Lang</div></button>
+          <button class="gb" onclick="selG('j5')" id="gb_j5"><div class="gn">JJ 05</div><div class="gname">10% Game</div><div class="gsub">Distanzgenauigkeit</div></button>
+          <button class="gb" onclick="selG('j6')" id="gb_j6"><div class="gn">JJ 06</div><div class="gname">Ladder Game</div><div class="gsub">Speed Control Zone</div></button>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- SEC 2 -->
-  <div class="section" id="sec2">
     <div class="card">
-      <div class="card-header"><span>&#127919;</span> Art des Spiels</div>
-      <div class="card-body" style="padding-bottom:10px">
-        <div class="cat-tabs">
-          <div class="cat-tab ap" id="tabP" onclick="showCat('p')"><span class="ct-icon">&#128202;</span>Performance Spiele<br><small style="font-weight:400;font-size:10px">Score &amp; Ergebnis</small></div>
-          <div class="cat-tab" id="tabC" onclick="showCat('c')"><span class="ct-icon">&#127942;</span>Challenge Leitern<br><small style="font-weight:400;font-size:10px">Level aufsteigen</small></div>
+      <div class="ch">&#127891; ECGA &#8211; Score Spiele</div>
+      <div class="cb">
+        <div class="gg">
+          <button class="gb" onclick="selG('e1')" id="gb_e1"><div class="gn">ECGA 01</div><div class="gname">PGA Tour Drill</div><div class="gsub">5&#8211;10&#8211;15&#8211;20ft</div></button>
+          <button class="gb" onclick="selG('e2')" id="gb_e2"><div class="gn">ECGA 02</div><div class="gname">18-Loch Test</div><div class="gsub">England Golf Standard</div></button>
         </div>
       </div>
-    </div>
-    <div id="catP">
-      <div class="card">
-        <div class="card-header"><span>&#9971;</span> Jankowski – Performance Games</div>
-        <div class="card-body">
-          <div class="game-grid">
-            <button class="game-btn" onclick="sel('j1')" id="gb_j1"><div class="game-num">JJ 01</div><div class="game-name">Must Make</div><div class="game-sub">3&#8211;6ft &middot; 20 Putts</div></button>
-            <button class="game-btn" onclick="sel('j2')" id="gb_j2"><div class="game-num">JJ 02</div><div class="game-name">Good Chances</div><div class="game-sub">6&#8211;15ft &middot; 16 Putts</div></button>
-            <button class="game-btn" onclick="sel('j3')" id="gb_j3"><div class="game-num">JJ 03</div><div class="game-name">Outside Chance</div><div class="game-sub">12&#8211;21ft &middot; vs Par</div></button>
-            <button class="game-btn" onclick="sel('j4')" id="gb_j4"><div class="game-num">JJ 04</div><div class="game-name">Proximity</div><div class="game-sub">Speed Control Lang</div></button>
-            <button class="game-btn" onclick="sel('j5')" id="gb_j5"><div class="game-num">JJ 05</div><div class="game-name">10% Game</div><div class="game-sub">Distanzgenauigkeit</div></button>
-            <button class="game-btn" onclick="sel('j6')" id="gb_j6"><div class="game-num">JJ 06</div><div class="game-name">Ladder Game</div><div class="game-sub">Speed Control Zone</div></button>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header"><span>&#127891;</span> ECGA – Score Spiele</div>
-        <div class="card-body">
-          <div class="game-grid">
-            <button class="game-btn" onclick="sel('e1')" id="gb_e1"><div class="game-num">ECGA 01</div><div class="game-name">PGA Tour Drill</div><div class="game-sub">5&#8211;10&#8211;15&#8211;20ft</div></button>
-            <button class="game-btn" onclick="sel('e2')" id="gb_e2"><div class="game-num">ECGA 02</div><div class="game-name">18-Loch Test</div><div class="game-sub">England Golf Standard</div></button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="catC" style="display:none">
-      <div class="card">
-        <div class="card-header ch"><span>&#127942;</span> Challenge Leitern – Level aufsteigen</div>
-        <div class="card-body">
-          <p style="font-size:13px;color:var(--text-light);margin-bottom:14px;line-height:1.6">Erreichtes Level wird dauerhaft pro Spieler gespeichert. Einmal geschafft &#8594; gesperrt &#8594; n&#228;chstes Level.</p>
-          <div class="game-grid">
-            <button class="game-btn cb" onclick="sel('c1')" id="gb_c1"><div class="game-num">LPC 01</div><div class="game-name">Putting 2&#8211;5ft</div><div class="game-sub">Challenge Leiter</div><div class="level-pill" id="pill_c1">0/10</div></button>
-            <button class="game-btn cb" onclick="sel('c2')" id="gb_c2"><div class="game-num">LPC 02</div><div class="game-name">Darts Chipping</div><div class="game-sub">Challenge Leiter</div><div class="level-pill" id="pill_c2">0/10</div></button>
-            <button class="game-btn cb" onclick="sel('c3')" id="gb_c3"><div class="game-num">ECGA 03</div><div class="game-name">Holing Out 2&#8211;7ft</div><div class="game-sub">Challenge Leiter</div><div class="level-pill" id="pill_c3">0/10</div></button>
-            <button class="game-btn cb" onclick="sel('c4')" id="gb_c4"><div class="game-num">ECGA 04</div><div class="game-name">Birdie Par Game</div><div class="game-sub">Challenge Leiter</div><div class="level-pill" id="pill_c4">0/10</div></button>
-            <button class="game-btn cb" onclick="sel('c5')" id="gb_c5"><div class="game-num">ECGA 05</div><div class="game-name">Survivor Lag</div><div class="game-sub">Challenge Leiter</div><div class="level-pill" id="pill_c5">0/10</div></button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="mt-4 btn-group">
-      <button class="btn btn-secondary" onclick="goToStep1()">&#8592; Zur&#252;ck</button>
-      <button class="btn btn-primary" onclick="goToStep3()" id="btnNext" disabled>Weiter &#8594;</button>
     </div>
   </div>
 
-  <!-- SEC 3 -->
-  <div class="section" id="sec3">
-    <div class="card" id="scoreCard"></div>
-    <div class="btn-group mt-4" id="scoreNav">
-      <button class="btn btn-secondary" onclick="goToStep2()">&#8592; Zur&#252;ck</button>
-      <button class="btn btn-primary" onclick="goToStep4()">Weiter &#8594; Zusammenfassung</button>
+  <div id="catC" style="display:none">
+    <div class="card">
+      <div class="ch pur">&#127942; Challenge Leitern &#8211; Level aufsteigen</div>
+      <div class="cb">
+        <p style="font-size:12px;color:var(--mute);margin-bottom:12px;line-height:1.6">Jedes Level wird dauerhaft pro Spieler gespeichert. Level abschlie&#223;en &#8594; W&#252;rfelaufgabe bestehen &#8594; gesperrt &#8594; n&#228;chstes Level.</p>
+        <div class="gg">
+          <button class="gb pur" onclick="selG('c1')" id="gb_c1"><div class="gn">LPC 01</div><div class="gname">Putting 2&#8211;5ft</div><div class="gsub">Challenge Leiter</div><div class="lpill" id="pill_c1">0/10</div></button>
+          <button class="gb pur" onclick="selG('c3')" id="gb_c3"><div class="gn">ECGA 03</div><div class="gname">Holing Out 2&#8211;7ft</div><div class="gsub">Challenge Leiter</div><div class="lpill" id="pill_c3">0/10</div></button>
+          <button class="gb pur" onclick="selG('c4')" id="gb_c4"><div class="gn">ECGA 04</div><div class="gname">Birdie Par Game</div><div class="gsub">Challenge Leiter</div><div class="lpill" id="pill_c4">0/10</div></button>
+          <button class="gb pur" onclick="selG('c5')" id="gb_c5"><div class="gn">ECGA 05</div><div class="gname">Survivor Lag</div><div class="gsub">Challenge Leiter</div><div class="lpill" id="pill_c5">0/10</div></button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- SEC 4 -->
-  <div class="section" id="sec4">
-    <div class="card" id="summaryCard"></div>
-    <div class="btn-group mt-4" id="saveNav">
-      <button class="btn btn-secondary" onclick="goToStep3()">&#8592; Bearbeiten</button>
-      <button class="btn btn-success btn-lg" onclick="saveResult()">&#128190; Speichern &amp; Exportieren</button>
-    </div>
-    <div class="btn-group mt-4" id="exportBtns" style="display:none">
-      <button class="btn btn-primary" onclick="downloadCSV()">&#128229; CSV</button>
-      <button class="btn btn-accent" onclick="downloadPDF()">&#128196; PDF</button>
-      <button class="btn btn-secondary" onclick="sendEmail()">&#9993;&#65039; E-Mail</button>
-    </div>
-    <div class="mt-4" id="newSessBtn" style="display:none">
-      <button class="btn btn-primary btn-full" onclick="newSession()">&#128260; Neues Spiel starten</button>
-    </div>
+  <div class="bgroup mt">
+    <button class="btn btn-sec" onclick="go1()">&#8592; Zur&#252;ck</button>
+    <button class="btn btn-blue" onclick="go3()" id="btnNext" disabled>Weiter &#8594;</button>
   </div>
+</div>
+
+<!-- SEC 3: SCORE ENTRY -->
+<div class="sec" id="sec3">
+  <div class="card" id="scoreCard"></div>
+  <div class="bgroup mt" id="scoreNav"></div>
+</div>
+
+<!-- SEC 4: SUMMARY + SAVE -->
+<div class="sec" id="sec4">
+  <div class="card" id="sumCard"></div>
+  <div class="bgroup mt" id="saveNav">
+    <button class="btn btn-sec" onclick="go3()">&#8592; Bearbeiten</button>
+    <button class="btn btn-green btn-lg" onclick="saveResult()">&#128190; Speichern &amp; Exportieren</button>
+  </div>
+  <div class="bgroup mt" id="exportBtns" style="display:none">
+    <button class="btn btn-blue" onclick="dlCSV()">&#128229; CSV</button>
+    <button class="btn btn-gold" onclick="dlPDF()">&#128196; PDF</button>
+    <button class="btn btn-sec" onclick="sendMail()">&#9993; E-Mail</button>
+  </div>
+  <div class="mt" id="newBtn" style="display:none">
+    <button class="btn btn-blue btn-full" onclick="newSess()">&#128260; Neues Spiel starten</button>
+  </div>
+</div>
+
 </main>
-<div class="toast" id="toast"></div>
+
+<!-- DICE MODAL -->
+<div class="moverlay" id="diceModal" style="display:none" onclick="if(event.target===this){closeDice();}">
+  <div class="mbox">
+    <div class="mhead">&#127922; THE DICE &#8211; Level-Challenge!</div>
+    <div class="mbody">
+      <p style="font-size:12px;color:var(--mute);text-align:center;margin-bottom:6px">Bevor das Level gespeichert wird, musst du erst diese Aufgabe schaffen:</p>
+      <div class="dicebig" id="diceEmoji"></div>
+      <div class="dicetask" id="diceTask"></div>
+      <div class="mq">Hast du die Aufgabe geschafft?</div>
+      <div class="mbtns">
+        <button class="btn btn-red" onclick="diceAnswer(false)">&#10060; Nein &#8211; offen lassen</button>
+        <button class="btn btn-green" onclick="diceAnswer(true)">&#10003; Ja &#8211; Level speichern!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" style="position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--green);color:white;padding:11px 22px;border-radius:28px;font-size:12px;font-weight:600;box-shadow:0 4px 18px rgba(0,0,0,.2);transition:transform .3s;z-index:999;white-space:nowrap;"></div>
 
 <script>
+// ─── STATE ────────────────────────────────────────────
 var COACH = 'landestrainergolf@gmail.com';
-var step = 1, selGame = null, gData = {}, saved = null, cat = 'p';
-var _ps = {}, _vp = {}, _pg = {};
+var curStep = 1, selGame = null, gdata = {}, savedR = null, curCat = 'p';
+var pstate = {}, vpstate = {}, pgstate = {};
+var pendingLv = null;
 
+// ─── PERFORMANCE GAMES ────────────────────────────────
 var PG = {
-  j1:{name:'Must Make',sub:'3-6ft',src:'JJ',desc:'20 Putts (5x 3,4,5,6ft). Zufaellige Reihenfolge - kein 2. Versuch.',scoring:{'18+':'World Class','17':'Grossartig','16':'Gut','15':'Durchschnitt'},ref:'PGA Tour 80%',type:'mm',dists:['3ft','3ft','3ft','3ft','3ft','4ft','4ft','4ft','4ft','4ft','5ft','5ft','5ft','5ft','5ft','6ft','6ft','6ft','6ft','6ft'],gs:function(d){return d.makes||0;},gr:function(s){return s>=18?'world-class':s>=17?'great':s>=16?'good':'average';},grl:function(s){return s>=18?'World Class':s>=17?'Grossartig':s>=16?'Gut':'Durchschnitt';}},
-  j2:{name:'Good Chances',sub:'6-15ft',src:'JJ',desc:'16 Putts (4x 6,9,12,15ft). 4 Loecher. Zufaellige Reihenfolge.',scoring:{'7+':'World Class','6':'Grossartig','5':'Gut','4':'Durchschnitt'},ref:'6ft:70% 9ft:45% 12ft:30% 15ft:23%',type:'mm',dists:['6ft','6ft','6ft','6ft','9ft','9ft','9ft','9ft','12ft','12ft','12ft','12ft','15ft','15ft','15ft','15ft'],gs:function(d){return d.makes||0;},gr:function(s){return s>=7?'world-class':s>=6?'great':s>=5?'good':'average';},grl:function(s){return s>=7?'World Class':s>=6?'Grossartig':s>=5?'Gut':'Durchschnitt';}},
-  j3:{name:'Outside Chance',sub:'12-21ft vs Par',src:'JJ',desc:'16 Putts (4x 12,15,18,21ft). Score vs Par 2. Einloch=Birdie, 3-Putt=Bogey.',scoring:{'-5':'World Class','-4':'Grossartig','-3':'Gut','-2':'Durchschnitt'},ref:'12ft:36% 15ft:28% 18ft:20% 21ft:16%',type:'vp',dists:['12ft','12ft','12ft','12ft','15ft','15ft','15ft','15ft','18ft','18ft','18ft','18ft','21ft','21ft','21ft','21ft'],gs:function(d){return d.tvp!==undefined?d.tvp:0;},gr:function(s){return s<=-5?'world-class':s<=-4?'great':s<=-3?'good':'average';},grl:function(s){return s<=-5?'World Class':s<=-4?'Grossartig':s<=-3?'Gut':'Durchschnitt';}},
-  j4:{name:'Proximity Game',sub:'Speed Control Lang',src:'JJ',desc:'12 Putts, 1 Ball. Start 21ft dann +1 Schritt bis 54ft. Score=Gesamtrestdistanz in ft.',scoring:{'<24':'World Class','<36':'Gut','<48':'OK'},ref:'World Class <2ft pro Putt',type:'prox',dists:['21ft','24ft','27ft','30ft','33ft','36ft','39ft','42ft','45ft','48ft','51ft','54ft'],gs:function(d){return d.tp!==undefined?d.tp:0;},gr:function(s){return s<24?'world-class':s<36?'good':'average';},grl:function(s){return s<24?'World Class':s<36?'Gut':s<48?'OK':'Weiter ueben';}},
-  j5:{name:'10% Game',sub:'Distanzgenauigkeit',src:'JJ',desc:'15 Putts (3x 21,30,39ft an 5 Loechern). 1 Pkt pro Ball in der 10%-Zone.',scoring:{'13+':'World Class','10+':'Gut'},ref:'21ft:21% kurz 30ft:37% kurz',type:'mm',dists:['21ft#1','21ft#2','21ft#3','30ft#1','30ft#2','30ft#3','39ft#1','39ft#2','39ft#3','21ft#4','21ft#5','30ft#4','30ft#5','39ft#4','39ft#5'],gs:function(d){return d.makes||0;},gr:function(s){return s>=13?'world-class':s>=10?'good':'average';},grl:function(s){return s>=13?'World Class':s>=10?'Gut':'Weiter ueben';}},
-  j6:{name:'Ladder Game',sub:'Speed Control Zone',src:'JJ',desc:'Alle Baelle in Zone landen UND kuerzer als vorheriger. Raus oder weiter = Neustart. 30 Min.',scoring:{Bestes:'Persoenlicher Rekord'},ref:'So viele Baelle wie moeglich',type:'lad',gs:function(d){return d.biz||0;},gr:function(s){return s>=8?'world-class':s>=6?'great':s>=4?'good':'average';},grl:function(s){return s>=8?'World Class':s>=6?'Grossartig':s>=4?'Gut':'Weiter ueben';}},
-  e1:{name:'PGA Tour Drill',sub:'5-10-15-20ft',src:'ECGA',desc:'20 Putts (je 1x 5,10,15,20ft) an 5 Loechern. Jeder eingelochte Putt = Distanz in Punkten.',scoring:{'100+':'PGA Tour Level','75+':'Sehr gut','50+':'Gut'},ref:'PGA Tour SG = 100 Pkt',type:'pga',gs:function(d){return d.pts||0;},gr:function(s){return s>=100?'world-class':s>=75?'great':s>=50?'good':'average';},grl:function(s){return s>=100?'PGA Tour Level':s>=75?'Sehr gut':s>=50?'Gut':'Weiter ueben';}},
-  e2:{name:'18-Loch Putting Test',sub:'England Golf Standard',src:'ECGA',desc:'18 Putts auf vorgegebenen Distanzen/Slopes. Gesamtanzahl Schlaege zaehlen. Rekord: Willett 25.',scoring:{'25':'Weltklasse (Willett)','28':'Sehr gut','32':'Gut'},ref:'Rekord: Willett 25 Putts',type:'18h',gs:function(d){return d.tp18||0;},gr:function(s){return s<=25?'world-class':s<=28?'great':s<=32?'good':'average';},grl:function(s){return s<=25?'Weltklasse':s<=28?'Sehr gut':s<=32?'Gut':'Weiter ueben';}}
+  j1: { name:'Must Make', sub:'3-6ft', src:'JJ',
+        desc:'20 Putts (5x aus 3, 4, 5 und 6ft). 5 Loecher, 4 Positionen je Loch. Zufaellige Reihenfolge – kein zweiter Versuch bei Fehlschlag.',
+        scoring:{'18+':'World Class','17':'Grossartig','16':'Gut','15':'Durchschnitt'}, ref:'PGA Tour Ø: 80%',
+        type:'mm', dists:['3ft','3ft','3ft','3ft','3ft','4ft','4ft','4ft','4ft','4ft','5ft','5ft','5ft','5ft','5ft','6ft','6ft','6ft','6ft','6ft'],
+        gs:function(d){return d.makes||0;},
+        gr:function(s){return s>=18?'green':s>=17?'blue':s>=16?'gold':'grey';},
+        grl:function(s){return s>=18?'World Class 🏆':s>=17?'Grossartig ⭐':s>=16?'Gut 👍':'Durchschnitt';} },
+  j2: { name:'Good Chances', sub:'6-15ft', src:'JJ',
+        desc:'16 Putts (4x aus 6, 9, 12 und 15ft). 4 Loecher. Zufaellige Reihenfolge – kein zweiter Versuch.',
+        scoring:{'7+':'World Class','6':'Grossartig','5':'Gut','4':'Durchschnitt'}, ref:'6ft:70% 9ft:45% 12ft:30% 15ft:23%',
+        type:'mm', dists:['6ft','6ft','6ft','6ft','9ft','9ft','9ft','9ft','12ft','12ft','12ft','12ft','15ft','15ft','15ft','15ft'],
+        gs:function(d){return d.makes||0;},
+        gr:function(s){return s>=7?'green':s>=6?'blue':s>=5?'gold':'grey';},
+        grl:function(s){return s>=7?'World Class 🏆':s>=6?'Grossartig ⭐':s>=5?'Gut 👍':'Durchschnitt';} },
+  j3: { name:'Outside Chance', sub:'12-21ft vs Par', src:'JJ',
+        desc:'16 Putts (4x aus 12, 15, 18, 21ft). Score = Gesamtschlaege vs Par 2. Einlochen = Birdie, 3-Putt = Bogey.',
+        scoring:{'-5':'World Class','-4':'Grossartig','-3':'Gut','-2':'Durchschnitt'}, ref:'12ft:36% 15ft:28% 18ft:20% 21ft:16%',
+        type:'vp', dists:['12ft','12ft','12ft','12ft','15ft','15ft','15ft','15ft','18ft','18ft','18ft','18ft','21ft','21ft','21ft','21ft'],
+        gs:function(d){return d.tvp!==undefined?d.tvp:0;},
+        gr:function(s){return s<=-5?'green':s<=-4?'blue':s<=-3?'gold':'grey';},
+        grl:function(s){return s<=-5?'World Class 🏆':s<=-4?'Grossartig ⭐':s<=-3?'Gut 👍':'Durchschnitt';} },
+  j4: { name:'Proximity Game', sub:'Speed Control Lang', src:'JJ',
+        desc:'12 Putts, 1 Ball. Start bei 21ft (7 Schritte), dann je +1 Schritt bis 54ft. Score = Gesamtrestdistanz aller 12 Putts in ft.',
+        scoring:{'<24':'World Class','<36':'Gut','<48':'OK'}, ref:'World Class: <2ft Ø pro Putt',
+        type:'prox', dists:['21ft (7S)','24ft (8S)','27ft (9S)','30ft (10S)','33ft (11S)','36ft (12S)','39ft (13S)','42ft (14S)','45ft (15S)','48ft (16S)','51ft (17S)','54ft (18S)'],
+        gs:function(d){return d.tp!==undefined?d.tp:0;},
+        gr:function(s){return s<24?'green':s<36?'gold':'grey';},
+        grl:function(s){return s<24?'World Class 🏆':s<36?'Gut 👍':s<48?'OK':'Weiter ueben 💪';} },
+  j5: { name:'10% Game', sub:'Distanzgenauigkeit', src:'JJ',
+        desc:'15 Putts (je 3 aus 21ft, 30ft, 39ft) an 5 Loechern. 1 Punkt pro Ball in der 10%-Zone. Zone: 21ft=2ft, 30ft=3ft, 39ft=4ft.',
+        scoring:{'13+':'World Class','10+':'Gut'}, ref:'21ft: 21% kurz – 30ft: 37% kurz – 39ft: 51% kurz',
+        type:'mm', dists:['21ft #1','21ft #2','21ft #3','30ft #1','30ft #2','30ft #3','39ft #1','39ft #2','39ft #3','21ft #4','21ft #5','30ft #4','30ft #5','39ft #4','39ft #5'],
+        gs:function(d){return d.makes||0;},
+        gr:function(s){return s>=13?'green':s>=10?'gold':'grey';},
+        grl:function(s){return s>=13?'World Class 🏆':s>=10?'Gut 👍':'Weiter ueben 💪';} },
+  j6: { name:'Ladder Game', sub:'Speed Control Zone', src:'JJ',
+        desc:'Alle Baelle muessen in der Zone landen UND kuerzer als der vorherige sein. Ball aus Zone oder weiter = Neustart. 30 Minuten Zeit.',
+        scoring:{'Bestes':'Persoenlicher Rekord'}, ref:'So viele Baelle wie moeglich in der Zone',
+        type:'lad',
+        gs:function(d){return d.biz||0;},
+        gr:function(s){return s>=8?'green':s>=6?'blue':s>=4?'gold':'grey';},
+        grl:function(s){return s>=8?'World Class 🏆':s>=6?'Grossartig ⭐':s>=4?'Gut 👍':'Weiter ueben 💪';} },
+  e1: { name:'PGA Tour Drill', sub:'5-10-15-20ft', src:'ECGA',
+        desc:'20 Putts (je 1x 5, 10, 15, 20ft) an 5 verschiedenen Loechern. Jeder eingelochte Putt gibt Punkte = Distanz in ft.',
+        scoring:{'100+':'PGA Tour Level','75+':'Sehr gut','50+':'Gut'}, ref:'PGA Tour SG Durchschnitt = 100 Punkte',
+        type:'pga',
+        gs:function(d){return d.pts||0;},
+        gr:function(s){return s>=100?'green':s>=75?'blue':s>=50?'gold':'grey';},
+        grl:function(s){return s>=100?'PGA Tour Level 🏆':s>=75?'Sehr gut ⭐':s>=50?'Gut 👍':'Weiter ueben 💪';} },
+  e2: { name:'18-Loch Putting Test', sub:'England Golf Standard', src:'ECGA',
+        desc:'18 Putts auf vorgegebenen Distanzen/Slopes. Gesamtanzahl Schlaege zaehlen. Kursrekord: Danny Willett – 25 Putts.',
+        scoring:{'25':'Weltklasse','28':'Sehr gut','32':'Gut'}, ref:'Kursrekord: Danny Willett 25 Putts',
+        type:'18h',
+        gs:function(d){return d.tp18||0;},
+        gr:function(s){return s<=25?'green':s<=28?'blue':s<=32?'gold':'grey';},
+        grl:function(s){return s<=25?'Weltklasse 🏆':s<=28?'Sehr gut ⭐':s<=32?'Gut 👍':'Weiter ueben 💪';} }
 };
 
+var H18 = [
+  {h:1,d:'3ft',s:'Gerade'},{h:2,d:'6ft',s:'R/L bergauf'},{h:3,d:'9ft',s:'L/R bergab'},
+  {h:4,d:'12ft',s:'R/L bergab'},{h:5,d:'15ft',s:'L/R'},{h:6,d:'4ft',s:'Leicht Break/bergab'},
+  {h:7,d:'8ft',s:'R/L'},{h:8,d:'12ft',s:'L/R'},{h:9,d:'16ft',s:'L/R bergab'},
+  {h:10,d:'20ft',s:'L/R bergauf'},{h:11,d:'5ft',s:'Leicht Break'},{h:12,d:'10ft',s:'L/R'},
+  {h:13,d:'15ft',s:'R/L'},{h:14,d:'20ft',s:'Gerade'},{h:15,d:'25ft',s:'Doppel Break'},
+  {h:16,d:'6ft',s:'R/L bergab'},{h:17,d:'33ft',s:'Leicht bergauf'},{h:18,d:'45ft',s:'Leicht bergab'}
+];
+
+// ─── CHALLENGE GAMES ──────────────────────────────────
 var CG = {
-  c1:{name:'Putting 2-5ft Challenge',sub:'LPC Challenge Leiter',desc:'Putte aus 2,3,4,5ft um das Loch. Fehlschlag = Neustart (1 Leben verloren). Ab Level 6 zufaellige Reihenfolge.',
-    levels:[{l:1,ch:'5 Versuche',pt:'2-3-4-5ft'},{l:2,ch:'4 Versuche',pt:'2-3-4-5ft'},{l:3,ch:'3 Versuche',pt:'2-3-4-5ft'},{l:4,ch:'2 Versuche',pt:'2-3-4-5ft'},{l:5,ch:'1 Versuch',pt:'2-3-4-5ft'},{l:6,ch:'Zufaellig, 4 Versuche',pt:'2-5-4-3ft'},{l:7,ch:'Zufaellig, 3 Versuche',pt:'2-5-4-3ft'},{l:8,ch:'Zufaellig, 2 Versuche',pt:'2-5-4-3ft'},{l:9,ch:'Zufaellig, 1 Versuch',pt:'2-5-4-3ft'},{l:10,ch:'Zufaellig, 0 Versuche',pt:'2-5-4-3ft'}]},
-  c2:{name:'Darts Chipping Challenge',sub:'LPC Challenge Leiter',desc:'5 Baelle rund ums Gruen. Score: Eingelocht=5, <6ft=2, <12ft=1, am Gruen=0, nicht am Gruen=-1. Brauchst 5+ Pkt PLUS The Dice.',
-    dice:[{n:'1',t:'Chip & Putt aus 6m im Rough'},{n:'2',t:'2 Putts aus 8m ausserhalb Gruen'},{n:'3',t:'Chip & Putt aus 6m (schlechte Lage)'},{n:'4',t:'Chip & Putt mit SW aus 6m am Fwy'},{n:'5',t:'2 Putts aus 8m'},{n:'6',t:'1 Putt aus 4ft'}],
-    levels:[{l:1,ch:'4 Chips 10m + 1 Chip 15m',pt:''},{l:2,ch:'3 Chips 10m + 2 Chips 15m',pt:''},{l:3,ch:'2 Chips 10m + 3 Chips 15m',pt:''},{l:4,ch:'1 Chip 10m + 4 Chips 15m',pt:''},{l:5,ch:'5 Chips aus 15m',pt:''},{l:6,ch:'4 Chips 15m + 1 Chip 20m',pt:''},{l:7,ch:'3 Chips 15m + 2 Chips 20m',pt:''},{l:8,ch:'2 Chips 15m + 3 Chips 20m',pt:''},{l:9,ch:'1 Chip 15m + 4 Chips 20m',pt:''},{l:10,ch:'5 Chips aus 20m',pt:''}]},
-  c3:{name:'Holing Out 2-7ft',sub:'ECGA Challenge Leiter',desc:'Putte aus 2-7ft in Folge. Fehlschlag = 1 Leben verloren + Neustart. Ab Level 4 zufaellig. Nach erfolgreichem Durchgang: The Dice.',
-    dice:[{n:'1',t:'2 Putts aus 30ft'},{n:'2',t:'1 Putt aus 2ft bergab'},{n:'3',t:'4ft Putt ohne Break'},{n:'4',t:'Chip & Putt aus 15 Yards'},{n:'5',t:'2 Putts aus 40ft (ausserhalb Gruen)'},{n:'6',t:'1 Putt aus 8ft'}],
-    levels:[{l:1,ch:'5 Leben, in Folge',pt:'2-3-4-5-6ft'},{l:2,ch:'4 Leben, in Folge',pt:'2-3-4-5-6ft'},{l:3,ch:'3 Leben, in Folge',pt:'2-3-4-5-6ft'},{l:4,ch:'Zufaellig, 3 Leben',pt:'2-3-4-5-6ft'},{l:5,ch:'3 Leben, in Folge',pt:'2-3-4-5-6-7ft'},{l:6,ch:'Zufaellig, 3 Leben',pt:'2-3-4-5-6-7ft'},{l:7,ch:'3 Leben, in Folge',pt:'2-3-4-5-6-7-8ft'},{l:8,ch:'Zufaellig, 3 Leben',pt:'2-3-4-5-6-7-8ft'},{l:9,ch:'2 Leben, in Folge',pt:'2-3-4-5-6-7-8ft'},{l:10,ch:'1 Leben, in Folge',pt:'2-3-4-5-6-7-8ft'}]},
-  c4:{name:'Birdie Par Game',sub:'ECGA Challenge Leiter',desc:'Tees N/E/S/W 2m vom Loch. 5. Tee = Par Saver 1m NE. Putte Birdie. Miss -> Par Saver. Par Saver getroffen -> Wiederholung. Verfehlt -> zurueck zum Start.',
-    levels:[{l:1,ch:'4 Putts aus 2m',pt:'Par Saver: 1m'},{l:2,ch:'8 Putts aus 2m',pt:'Par Saver: 1m'},{l:3,ch:'4 Putts aus 2.5m',pt:'Par Saver: 1m'},{l:4,ch:'8 Putts aus 2.5m',pt:'Par Saver: 1m'},{l:5,ch:'4 Putts aus 3m',pt:'Par Saver: 1.5m'},{l:6,ch:'8 Putts aus 3m',pt:'Par Saver: 1.5m'},{l:7,ch:'4 Putts aus 3.5m',pt:'Par Saver: 1.5m'},{l:8,ch:'8 Putts aus 3.5m',pt:'Par Saver: 1.5m'},{l:9,ch:'4 Putts aus 4m',pt:'Par Saver: 2m'},{l:10,ch:'8 Putts aus 4m',pt:'Par Saver: 2m'}]},
-  c5:{name:'Survivor Lag Putting',sub:'ECGA Challenge Leiter',desc:'Alle Putts muessen innerhalb einer Putterlaenge enden um weiterzumachen. Miss -> zurueck zu Loch 1, 1 Leben verloren.',
-    levels:[{l:1,ch:'3 Putts in Folge',pt:'15-20ft, 5 Leben'},{l:2,ch:'3 Putts in Folge',pt:'20-25ft, 5 Leben'},{l:3,ch:'3 Putts in Folge',pt:'25-30ft, 5 Leben'},{l:4,ch:'4 Putts in Folge',pt:'25-30ft, 5 Leben'},{l:5,ch:'4 Putts in Folge',pt:'30-40ft, 5 Leben'},{l:6,ch:'5 Putts in Folge',pt:'25-30ft, 5 Leben'},{l:7,ch:'5 Putts in Folge',pt:'30-40ft, 5 Leben'},{l:8,ch:'6 Putts in Folge',pt:'30-40ft, 5 Leben'},{l:9,ch:'6 Putts in Folge',pt:'25-30ft, 3 Leben'},{l:10,ch:'6 Putts in Folge',pt:'30-40ft, 3 Leben'}]}
+  c1: { name:'Putting 2-5ft Challenge', sub:'LPC Challenge Leiter',
+        desc:'Putte aus 2, 3, 4, 5ft um das Loch. Fehlschlag = Neustart (1 Leben verloren). Ab Level 6 in zufaelliger Reihenfolge. Nach Abschluss eines Durchgangs: THE DICE Aufgabe bestehen!',
+        dice:[
+          {n:'1',t:'2 Putts aus 30ft'},
+          {n:'2',t:'1 Putt aus 2ft bergab'},
+          {n:'3',t:'4ft Putt ohne Break'},
+          {n:'4',t:'Chip & Putt aus 15 Yards'},
+          {n:'5',t:'2 Putts aus 40ft (ausserhalb Gruen)'},
+          {n:'6',t:'1 Putt aus 8ft'}
+        ],
+        levels:[
+          {l:1,ch:'5 Versuche',pt:'2-3-4-5ft'},{l:2,ch:'4 Versuche',pt:'2-3-4-5ft'},
+          {l:3,ch:'3 Versuche',pt:'2-3-4-5ft'},{l:4,ch:'2 Versuche',pt:'2-3-4-5ft'},
+          {l:5,ch:'1 Versuch',pt:'2-3-4-5ft'},{l:6,ch:'Zufaellig, 4 Versuche',pt:'2-5-4-3ft'},
+          {l:7,ch:'Zufaellig, 3 Versuche',pt:'2-5-4-3ft'},{l:8,ch:'Zufaellig, 2 Versuche',pt:'2-5-4-3ft'},
+          {l:9,ch:'Zufaellig, 1 Versuch',pt:'2-5-4-3ft'},{l:10,ch:'Zufaellig, 0 Versuche',pt:'2-5-4-3ft'}
+        ]},
+  c3: { name:'Holing Out 2-7ft', sub:'ECGA Challenge Leiter',
+        desc:'Putte aus 2-7ft in Folge. Fehlschlag = 1 Leben verloren + Neustart. Ab Level 4 zufaellige Reihenfolge. Nach erfolgreichem Durchgang: THE DICE Aufgabe bestehen!',
+        dice:[
+          {n:'1',t:'Chip & Putt aus 6m im Rough'},
+          {n:'2',t:'2 Putts aus 8m ausserhalb des Gruens'},
+          {n:'3',t:'Chip & Putt aus 6m (schlechte Lage)'},
+          {n:'4',t:'Chip & Putt mit SW aus 6m am Fairway'},
+          {n:'5',t:'2 Putts aus 8m'},
+          {n:'6',t:'1 Putt aus 4ft'}
+        ],
+        levels:[
+          {l:1,ch:'5 Leben, in Folge',pt:'2-3-4-5-6ft'},{l:2,ch:'4 Leben, in Folge',pt:'2-3-4-5-6ft'},
+          {l:3,ch:'3 Leben, in Folge',pt:'2-3-4-5-6ft'},{l:4,ch:'Zufaellig, 3 Leben',pt:'2-3-4-5-6ft'},
+          {l:5,ch:'3 Leben, in Folge',pt:'2-3-4-5-6-7ft'},{l:6,ch:'Zufaellig, 3 Leben',pt:'2-3-4-5-6-7ft'},
+          {l:7,ch:'3 Leben, in Folge',pt:'2-3-4-5-6-7-8ft'},{l:8,ch:'Zufaellig, 3 Leben',pt:'2-3-4-5-6-7-8ft'},
+          {l:9,ch:'2 Leben, in Folge',pt:'2-3-4-5-6-7-8ft'},{l:10,ch:'1 Leben, in Folge',pt:'2-3-4-5-6-7-8ft'}
+        ]},
+  c4: { name:'Birdie Par Game', sub:'ECGA Challenge Leiter',
+        desc:'Tees bei N/E/S/W jeweils 2m vom Loch. 5. Tee = Par Saver 1m NE vom Loch. Putte den Birdie-Putt. Miss -> Par Saver. Par Saver ein -> Wiederholung. Par Saver verfehlt -> zurueck zum Start.',
+        dice:null,
+        levels:[
+          {l:1,ch:'4 Putts aus 2m',pt:'Par Saver: 1m'},{l:2,ch:'8 Putts aus 2m',pt:'Par Saver: 1m'},
+          {l:3,ch:'4 Putts aus 2.5m',pt:'Par Saver: 1m'},{l:4,ch:'8 Putts aus 2.5m',pt:'Par Saver: 1m'},
+          {l:5,ch:'4 Putts aus 3m',pt:'Par Saver: 1.5m'},{l:6,ch:'8 Putts aus 3m',pt:'Par Saver: 1.5m'},
+          {l:7,ch:'4 Putts aus 3.5m',pt:'Par Saver: 1.5m'},{l:8,ch:'8 Putts aus 3.5m',pt:'Par Saver: 1.5m'},
+          {l:9,ch:'4 Putts aus 4m',pt:'Par Saver: 2m'},{l:10,ch:'8 Putts aus 4m',pt:'Par Saver: 2m'}
+        ]},
+  c5: { name:'Survivor Lag Putting', sub:'ECGA Challenge Leiter',
+        desc:'Alle Putts muessen innerhalb einer Putterlaenge vom Loch enden um weiterzumachen. Miss -> zurueck zu Loch 1, 1 Leben verloren. Ziel: Anzahl Putts in Folge innerhalb der erlaubten Leben schaffen.',
+        dice:null,
+        levels:[
+          {l:1,ch:'3 Putts in Folge',pt:'15-20ft, 5 Leben'},{l:2,ch:'3 Putts in Folge',pt:'20-25ft, 5 Leben'},
+          {l:3,ch:'3 Putts in Folge',pt:'25-30ft, 5 Leben'},{l:4,ch:'4 Putts in Folge',pt:'25-30ft, 5 Leben'},
+          {l:5,ch:'4 Putts in Folge',pt:'30-40ft, 5 Leben'},{l:6,ch:'5 Putts in Folge',pt:'25-30ft, 5 Leben'},
+          {l:7,ch:'5 Putts in Folge',pt:'30-40ft, 5 Leben'},{l:8,ch:'6 Putts in Folge',pt:'30-40ft, 5 Leben'},
+          {l:9,ch:'6 Putts in Folge',pt:'25-30ft, 3 Leben'},{l:10,ch:'6 Putts in Folge',pt:'30-40ft, 3 Leben'}
+        ]}
 };
 
-var H18 = [{h:1,d:'3ft',s:'Gerade'},{h:2,d:'6ft',s:'R/L bergauf'},{h:3,d:'9ft',s:'L/R bergab'},{h:4,d:'12ft',s:'R/L bergab'},{h:5,d:'15ft',s:'L/R'},{h:6,d:'4ft',s:'Leicht Break/bergab'},{h:7,d:'8ft',s:'R/L'},{h:8,d:'12ft',s:'L/R'},{h:9,d:'16ft',s:'L/R bergab'},{h:10,d:'20ft',s:'L/R bergauf'},{h:11,d:'5ft',s:'Leicht Break'},{h:12,d:'10ft',s:'L/R'},{h:13,d:'15ft',s:'R/L'},{h:14,d:'20ft',s:'Gerade'},{h:15,d:'25ft',s:'Doppel Break'},{h:16,d:'6ft',s:'R/L bergab'},{h:17,d:'33ft',s:'Leicht bergauf'},{h:18,d:'45ft',s:'Leicht bergab'}];
+var DICE_FACES = ['','⚀','⚁','⚂','⚃','⚄','⚅'];
 
-window.onload = function(){
+// ─── INIT ─────────────────────────────────────────────
+window.onload = function() {
   var now = new Date();
-  document.getElementById('sessionDate').value = now.toLocaleDateString('de-AT',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  loadHistory(); updatePills();
+  document.getElementById('dateField').value = now.toLocaleDateString('de-AT', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  loadHist();
+  updatePills();
 };
 
-function setStep(n){
-  step=n;
-  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
-  document.getElementById('sec'+n).classList.add('active');
-  document.querySelectorAll('.step-item').forEach(function(el,i){
-    el.classList.remove('active','done');
-    if(i+1<n) el.classList.add('done');
-    if(i+1===n) el.classList.add('active');
+// ─── NAVIGATION ───────────────────────────────────────
+function setStep(n) {
+  curStep = n;
+  document.querySelectorAll('.sec').forEach(function(s) { s.classList.remove('act'); });
+  document.getElementById('sec' + n).classList.add('act');
+  [1,2,3,4].forEach(function(i) {
+    var el = document.getElementById('s' + i);
+    el.classList.remove('act','done');
+    if (i < n) el.classList.add('done');
+    if (i === n) el.classList.add('act');
   });
-  window.scrollTo(0,0);
-  var name=document.getElementById('playerName').value.trim();
-  var gn=selGame?(PG[selGame]||CG[selGame])&&(PG[selGame]||CG[selGame]).name||'':'';
-  document.getElementById('headerInfo').innerHTML=name+(gn?'<br>'+gn:'');
+  window.scrollTo(0, 0);
+  var nm = document.getElementById('playerName').value.trim();
+  var gn = selGame ? ((PG[selGame] || CG[selGame]) ? (PG[selGame] || CG[selGame]).name : '') : '';
+  document.getElementById('hinfo').innerHTML = nm + (gn ? '<br>' + gn : '');
 }
 
-function goToStep1(){setStep(1);}
-function goToStep2(){
-  var n=document.getElementById('playerName').value.trim();
-  if(!n){toast('Bitte Namen eingeben!',1);document.getElementById('playerName').focus();return;}
+function go1() { setStep(1); }
+
+function go2() {
+  var nm = document.getElementById('playerName').value.trim();
+  if (!nm) { toast('Bitte zuerst Namen eingeben!', 1); document.getElementById('playerName').focus(); return; }
   setStep(2);
 }
-function goToStep3(){
-  if(!selGame){toast('Bitte ein Spiel waehlen!',1);return;}
-  buildEntry(); setStep(3);
-}
-function goToStep4(){
-  if(!collectData()) return;
-  buildSummary(); setStep(4);
+
+function go3() {
+  if (!selGame) { toast('Bitte ein Spiel auswaehlen!', 1); return; }
+  buildEntry();
+  setStep(3);
 }
 
-function showCat(c){
-  cat=c;
-  document.getElementById('catP').style.display=c==='p'?'block':'none';
-  document.getElementById('catC').style.display=c==='c'?'block':'none';
-  document.getElementById('tabP').className='cat-tab'+(c==='p'?' ap':'');
-  document.getElementById('tabC').className='cat-tab'+(c==='c'?' ac':'');
-  if(selGame){
-    var ip=!!PG[selGame],ic=!!CG[selGame];
-    if((c==='p'&&ic)||(c==='c'&&ip)){
-      document.querySelectorAll('.game-btn').forEach(function(b){b.classList.remove('selected');});
-      selGame=null; document.getElementById('btnNext').disabled=true;
+function go4() {
+  if (!collectData()) return;
+  buildSummary();
+  setStep(4);
+}
+
+// ─── CAT TABS ─────────────────────────────────────────
+function showCat(c) {
+  curCat = c;
+  document.getElementById('catP').style.display = c === 'p' ? 'block' : 'none';
+  document.getElementById('catC').style.display = c === 'c' ? 'block' : 'none';
+  document.getElementById('tabP').className = 'ctab' + (c === 'p' ? ' ap' : '');
+  document.getElementById('tabC').className = 'ctab' + (c === 'c' ? ' ac' : '');
+  if (selGame) {
+    var wasChal = !!CG[selGame];
+    if ((c === 'p' && wasChal) || (c === 'c' && !wasChal)) {
+      document.querySelectorAll('.gb').forEach(function(b) { b.classList.remove('sel'); });
+      selGame = null;
+      document.getElementById('btnNext').disabled = true;
     }
   }
 }
 
-function sel(id){
-  selGame=id;
-  document.querySelectorAll('.game-btn').forEach(function(b){b.classList.remove('selected');});
-  document.getElementById('gb_'+id).classList.add('selected');
-  document.getElementById('btnNext').disabled=false;
-  document.getElementById('btnNext').textContent=CG[id]?'Weiter -> Challenge':'Weiter -> Ergebnis';
-  gData={};
+// ─── GAME SELECT ──────────────────────────────────────
+function selG(id) {
+  selGame = id;
+  document.querySelectorAll('.gb').forEach(function(b) { b.classList.remove('sel'); });
+  document.getElementById('gb_' + id).classList.add('sel');
+  document.getElementById('btnNext').disabled = false;
+  document.getElementById('btnNext').textContent = CG[id] ? 'Weiter → Challenge' : 'Weiter → Ergebnis';
+  gdata = {};
 }
 
-function updatePills(){
-  ['c1','c2','c3','c4','c5'].forEach(function(id){
-    var prog=getProgress(id);
-    var el=document.getElementById('pill_'+id);
-    if(el) el.textContent='Level '+prog+'/'+CG[id].levels.length;
+// ─── CHALLENGE PILLS ──────────────────────────────────
+function updatePills() {
+  ['c1','c3','c4','c5'].forEach(function(id) {
+    var prog = getPlayerProg(id, '');
+    var el = document.getElementById('pill_' + id);
+    if (el) el.textContent = prog + '/' + CG[id].levels.length;
   });
 }
 
-function getProgress(gid){
-  var k='lpChal_'+gid;
-  var d=JSON.parse(localStorage.getItem(k)||'{}');
-  var hi=0;
-  Object.keys(d).forEach(function(pk){
-    var pd=d[pk];
-    Object.keys(pd).forEach(function(lk){ if(pd[lk]&&parseInt(lk.replace('l',''))>hi) hi=parseInt(lk.replace('l','')); });
-  });
+function getStoredChal(gid) {
+  return JSON.parse(localStorage.getItem('lpC_' + gid) || '{}');
+}
+
+function getPlayerProg(gid, player) {
+  var d = getStoredChal(gid);
+  var pk = 'p_' + (player || '').toLowerCase().replace(/\s+/g,'_');
+  var pd = d[pk] || {};
+  var hi = 0;
+  Object.keys(pd).forEach(function(k) { var n = parseInt(k.replace('l','')); if (pd[k] && n > hi) hi = n; });
   return hi;
 }
 
-function getPlayerProgress(gid, player){
-  var k='lpChal_'+gid;
-  var d=JSON.parse(localStorage.getItem(k)||'{}');
-  var pk='p_'+player.toLowerCase().replace(/\s/g,'_');
-  return d[pk]||{};
+function getPlayerDone(gid, player) {
+  var d = getStoredChal(gid);
+  var pk = 'p_' + player.toLowerCase().replace(/\s+/g,'_');
+  return d[pk] || {};
 }
 
-function buildEntry(){
-  if(CG[selGame]){buildChalEntry();return;}
-  var g=PG[selGame];
-  var h='<div class="card-header"><span>&#9971;</span> '+g.name+' &ndash; Ergebnis</div><div class="card-body">';
-  h+='<div class="game-desc"><strong>'+g.name+'</strong> ('+g.src+')<br>'+g.desc+'<br><em style="font-size:11px">'+g.ref+'</em></div>';
-  h+='<div class="scoring-legend">';
-  for(var k in g.scoring) h+='<div class="sl-item"><span>'+k+'</span> = '+g.scoring[k]+'</div>';
-  h+='</div><div class="divider"></div>';
-  if(g.type==='mm'){
-    h+='<div class="score-section"><h3>Tippe jeden Putt: &#10003; Eingelocht / X Daneben</h3><div class="putt-tracker">';
-    g.dists.forEach(function(d,i){
-      h+='<div class="pt-row"><div class="pt-label">Putt '+(i+1)+'<small>'+d+'</small></div><div class="pt-buttons"><button class="pt-btn" id="pt'+i+'m" onclick="sp('+i+',\'m\')">&#10003; Ein</button><button class="pt-btn" id="pt'+i+'x" onclick="sp('+i+',\'x\')">X Miss</button></div></div>';
+// ─── SCORE ENTRY BUILDER ──────────────────────────────
+function buildEntry() {
+  if (CG[selGame]) { buildChalEntry(); return; }
+  var g = PG[selGame];
+  var h = '<div class="ch">' + g.src + ' – ' + g.name + ' – Ergebnis</div><div class="cb">';
+  h += '<div class="desc"><strong>' + g.name + '</strong><br>' + g.desc + '<br><em style="font-size:10px">' + g.ref + '</em></div>';
+  h += '<div class="sleg">';
+  for (var k in g.scoring) h += '<div class="sli"><span>' + k + '</span> = ' + g.scoring[k] + '</div>';
+  h += '</div><div class="div"></div>';
+
+  if (g.type === 'mm') {
+    h += '<div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:10px">Tippe jeden Putt an: ✅ Eingelocht / ❌ Daneben</div>';
+    h += '<div class="ptrack" id="ptrack">';
+    g.dists.forEach(function(d, i) {
+      h += '<div class="prow"><div class="plabel">Putt ' + (i+1) + '<small>' + d + '</small></div>'
+         + '<div class="pbtns">'
+         + '<button class="pbtn" id="pm' + i + '" onclick="sp(' + i + ',1)">✅ Ein</button>'
+         + '<button class="pbtn" id="px' + i + '" onclick="sp(' + i + ',0)">❌ Miss</button>'
+         + '</div></div>';
     });
-    h+='</div><div style="margin-top:10px;font-size:13px">Eingelocht: <strong id="mkCt">0</strong>/'+g.dists.length+'</div></div>';
-  } else if(g.type==='vp'){
-    h+='<div class="score-section"><h3>Schlaege pro Putt: 1=Ein, 2=Par, 3=Bogey</h3><div class="putt-tracker">';
-    g.dists.forEach(function(d,i){
-      h+='<div class="pt-row"><div class="pt-label">Putt '+(i+1)+'<small>'+d+'</small></div><div class="pt-buttons"><button class="pt-btn" id="vp'+i+'_1" onclick="svp('+i+',1)">1 &#127989;</button><button class="pt-btn" id="vp'+i+'_2" onclick="svp('+i+',2)">2 &#10003;</button><button class="pt-btn" id="vp'+i+'_3" onclick="svp('+i+',3)">3 X</button></div></div>';
+    h += '</div><div class="live-count">Eingelocht: <strong id="mkct">0</strong> / ' + g.dists.length + '</div>';
+
+  } else if (g.type === 'vp') {
+    h += '<div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:10px">Schlaege pro Putt: 1 = Eingelocht · 2 = Par · 3 = Bogey</div>';
+    h += '<div class="ptrack">';
+    g.dists.forEach(function(d, i) {
+      h += '<div class="prow"><div class="plabel">Putt ' + (i+1) + '<small>' + d + '</small></div>'
+         + '<div class="pbtns">'
+         + '<button class="pbtn" id="vp' + i + '_1" onclick="svp(' + i + ',1)">1 🎯</button>'
+         + '<button class="pbtn" id="vp' + i + '_2" onclick="svp(' + i + ',2)">2 ✓</button>'
+         + '<button class="pbtn" id="vp' + i + '_3" onclick="svp(' + i + ',3)">3 ✗</button>'
+         + '</div></div>';
     });
-    h+='</div><div style="margin-top:10px;font-size:13px">Score vs Par: <strong id="vpCt">0</strong></div></div>';
-  } else if(g.type==='prox'){
-    h+='<div class="score-section"><h3>Restdistanz zum Loch in ft (0 = Eingelocht)</h3><div class="putt-tracker">';
-    g.dists.forEach(function(d,i){
-      h+='<div class="pt-row"><div class="pt-label">Putt '+(i+1)+'<small>'+d+'</small></div><div class="pt-buttons" style="flex:1"><input type="number" min="0" max="60" id="px'+i+'" style="width:80px;padding:6px;font-size:15px;font-weight:700;text-align:center" placeholder="ft" oninput="updProx()"></div></div>';
+    h += '</div><div class="live-count">Score vs Par: <strong id="vpct">0</strong></div>';
+
+  } else if (g.type === 'prox') {
+    h += '<div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:10px">Restdistanz zum Loch in ft eingeben (0 = Eingelocht)</div>';
+    h += '<div class="ptrack">';
+    g.dists.forEach(function(d, i) {
+      h += '<div class="prow"><div class="plabel">Putt ' + (i+1) + '<small>' + d + '</small></div>'
+         + '<div class="pbtns" style="flex:1"><input type="number" min="0" max="60" id="px' + i + '" style="width:74px;padding:5px;font-size:14px;font-weight:700;text-align:center" placeholder="ft" oninput="updPx()"></div></div>';
     });
-    h+='</div><div style="margin-top:10px;font-size:13px">Gesamt: <strong id="pxTotal">0</strong> ft</div></div>';
-  } else if(g.type==='lad'){
-    h+='<div class="score-section"><h3>Ladder Game Ergebnis</h3><div class="form-row"><label>Startdistanz (ft)</label><input type="number" id="ldDist" placeholder="z.B. 30"></div><div class="form-row"><label>Baelle in Zone (bestes Ergebnis)</label><input type="number" id="ldBalls" placeholder="z.B. 6"></div><div class="form-row"><label>Neustarts</label><input type="number" id="ldRestart" placeholder="z.B. 3"></div></div>';
-  } else if(g.type==='pga'){
-    h+=buildPGAInput();
-  } else if(g.type==='18h'){
-    h+=build18Input();
+    h += '</div><div class="live-count">Gesamt: <strong id="pxtot">0</strong> ft</div>';
+
+  } else if (g.type === 'lad') {
+    h += '<div class="fr"><label>Startdistanz (ft)</label><input type="number" id="ldD" placeholder="z.B. 30" min="5" max="100"></div>';
+    h += '<div class="fr"><label>Baelle in Zone (bestes Ergebnis dieser Session)</label><input type="number" id="ldB" placeholder="z.B. 6" min="0"></div>';
+    h += '<div class="fr"><label>Anzahl Neustarts</label><input type="number" id="ldR" placeholder="z.B. 3" min="0"></div>';
+
+  } else if (g.type === 'pga') {
+    h += buildPGAInput();
+
+  } else if (g.type === '18h') {
+    h += build18Input();
   }
-  h+='<div class="divider"></div><div class="form-row"><label>Notizen (optional)</label><textarea id="gameNotes" rows="2" placeholder="Bedingungen, Beobachtungen..."></textarea></div></div>';
-  document.getElementById('scoreCard').innerHTML=h;
-  document.getElementById('scoreNav').style.display='flex';
-  document.getElementById('scoreNav').innerHTML='<button class="btn btn-secondary" onclick="goToStep2()">&#8592; Zurueck</button><button class="btn btn-primary" onclick="goToStep4()">Weiter &#8594; Zusammenfassung</button>';
-  _ps={}; _vp={}; _pg={};
+
+  h += '<div class="div"></div><div class="fr"><label>Notizen (optional)</label><textarea id="gnotes" rows="2" placeholder="Bedingungen, Beobachtungen..."></textarea></div>';
+  h += '</div>';
+  document.getElementById('scoreCard').innerHTML = h;
+  document.getElementById('scoreNav').innerHTML =
+    '<button class="btn btn-sec" onclick="go2()">← Zurueck</button>'
+    + '<button class="btn btn-blue" onclick="go4()">Weiter → Zusammenfassung</button>';
+  pstate = {}; vpstate = {}; pgstate = {};
 }
 
-function buildPGAInput(){
-  var h='<div class="score-section"><h3>Eingelochte Putts markieren (Pkt = Distanz)</h3>';
-  [1,2,3,4,5].forEach(function(hn){
-    h+='<div style="margin-bottom:12px"><div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:6px">Loch '+hn+'</div><div class="putt-tracker">';
-    [5,10,15,20].forEach(function(d){
-      var id='pg_h'+hn+'_d'+d;
-      h+='<div class="pt-row"><div class="pt-label">'+d+'ft<small>= '+d+' Pkt</small></div><div class="pt-buttons"><button class="pt-btn" id="'+id+'m" onclick="spga(\''+id+'\',\'m\')">&#10003; Ein</button><button class="pt-btn" id="'+id+'x" onclick="spga(\''+id+'\',\'x\')">X Miss</button></div></div>';
+function buildPGAInput() {
+  var h = '<div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:10px">Eingelochte Putts markieren – Punkte = Distanz in ft</div>';
+  [1,2,3,4,5].forEach(function(hn) {
+    h += '<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:5px">Loch ' + hn + '</div><div class="ptrack">';
+    [5,10,15,20].forEach(function(dist) {
+      var id = 'pg_h' + hn + '_d' + dist;
+      h += '<div class="prow"><div class="plabel">' + dist + 'ft<small>= ' + dist + ' Pkt</small></div>'
+         + '<div class="pbtns">'
+         + '<button class="pbtn" id="' + id + 'm" onclick="spga(&quot;' + id + '&quot;,1)">✅ Ein</button>'
+         + '<button class="pbtn" id="' + id + 'x" onclick="spga(&quot;' + id + '&quot;,0)">❌ Miss</button>'
+         + '</div></div>';
     });
-    h+='</div></div>';
+    h += '</div></div>';
   });
-  h+='<div style="font-size:14px;font-weight:700;color:var(--blue)">Punkte: <strong id="pgaPts">0</strong> / 250</div></div>';
+  h += '<div class="live-count">Punkte: <strong id="pgapts">0</strong> / 250 moeglich</div>';
   return h;
 }
 
-function build18Input(){
-  var h='<div class="score-section"><h3>Schlaege pro Loch eingeben</h3><div style="overflow-x:auto"><table class="hole-table"><thead><tr><th>Loch</th><th>Dist</th><th>Slope</th><th>Schlaege</th></tr></thead><tbody>';
-  H18.forEach(function(hd){
-    h+='<tr><td>'+hd.h+'</td><td>'+hd.d+'</td><td style="text-align:left">'+hd.s+'</td><td><input type="number" class="hi" id="h18_'+hd.h+'" min="1" max="6" placeholder="-" oninput="upd18()"></td></tr>';
+function build18Input() {
+  var h = '<div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:10px">Schlaege pro Loch eingeben</div>';
+  h += '<div style="overflow-x:auto"><table class="htable"><thead><tr><th>Loch</th><th>Dist</th><th>Slope</th><th>Schlaege</th></tr></thead><tbody>';
+  H18.forEach(function(hd) {
+    h += '<tr><td>' + hd.h + '</td><td>' + hd.d + '</td><td style="text-align:left">' + hd.s + '</td>'
+       + '<td><input type="number" class="hi" id="h18_' + hd.h + '" min="1" max="6" placeholder="-" oninput="upd18()"></td></tr>';
   });
-  h+='</tbody></table></div><div style="margin-top:10px;font-size:14px;font-weight:700;color:var(--blue)">Gesamt: <strong id="tot18">-</strong> (Rekord: Willett 25)</div></div>';
+  h += '</tbody></table></div><div class="live-count">Gesamt: <strong id="tot18">–</strong> (Rekord: Willett 25)</div>';
   return h;
 }
 
-function buildChalEntry(){
-  var g=CG[selGame];
-  var player=document.getElementById('playerName').value.trim();
-  var pd=getPlayerProgress(selGame,player);
-  var comp=Object.values(pd).filter(function(v){return v;}).length;
-  var tot=g.levels.length;
-  var pct=Math.round(comp/tot*100);
-  var h='<div class="card-header ch"><span>&#127942;</span> '+g.name+'</div><div class="card-body">';
-  h+='<div class="game-desc cd"><strong>'+g.name+'</strong><br>'+g.desc+'</div>';
-  if(g.dice){
-    h+='<div class="dice-box"><h4>&#127922; THE DICE</h4>';
-    g.dice.forEach(function(d){h+='<div class="dice-row"><span class="dice-face">'+getDF(d.n)+'</span><span>'+d.t+'</span></div>';});
-    h+='</div>';
+function buildChalEntry() {
+  var g = CG[selGame];
+  var player = document.getElementById('playerName').value.trim();
+  var done = getPlayerDone(selGame, player);
+  var comp = Object.keys(done).filter(function(k) { return done[k]; }).length;
+  var tot = g.levels.length;
+  var pct = Math.round(comp / tot * 100);
+
+  var h = '<div class="ch pur">🏆 ' + g.name + '</div><div class="cb">';
+  h += '<div class="desc pur"><strong>' + g.name + '</strong><br>' + g.desc + '</div>';
+
+  if (g.dice) {
+    h += '<div class="dicebox"><h4>🎲 THE DICE – Aufgaben (nach Levelabschluss zufaellig gewuerfelt)</h4>';
+    g.dice.forEach(function(d) {
+      h += '<div class="dicerow"><span class="diceface">' + (DICE_FACES[parseInt(d.n)] || d.n) + '</span><span>' + d.t + '</span></div>';
+    });
+    h += '</div>';
   }
-  h+='<div class="lad-prog"><span style="font-size:13px;font-weight:700">'+player+':</span><div class="lp-bar-wrap"><div class="lp-bar" style="width:'+pct+'%"></div></div><span class="lp-text">'+comp+'/'+tot+'</span></div>';
-  h+='<div class="lad-grid">';
-  g.levels.forEach(function(lv){
-    var done=pd['l'+lv.l];
-    h+='<div class="lad-lv'+(done?' done':'')+'" id="ll_'+lv.l+'">';
-    h+='<div class="ll-num">'+lv.l+'</div>';
-    h+='<div class="ll-info"><div class="ll-title">'+lv.ch+'</div>'+(lv.pt?'<div class="ll-desc">'+lv.pt+'</div>':'')+'</div>';
-    if(done) h+='<span class="ll-date">&#10003; '+done+'</span>';
-    h+='<div class="ll-actions">';
-    if(done) h+='<button class="ll-btn ll-un" onclick="undoLv(\''+selGame+'\',\''+player+'\','+lv.l+')">&#8617;</button>';
-    else h+='<button class="ll-btn ll-do" onclick="doLv(\''+selGame+'\',\''+player+'\','+lv.l+')">&#10003; Geschafft!</button>';
-    h+='</div></div>';
+
+  h += '<div class="ladprog"><span style="font-size:12px;font-weight:700">' + player + ':</span>'
+     + '<div class="barwrap"><div class="bar" style="width:' + pct + '%"></div></div>'
+     + '<span class="barlab">' + comp + '/' + tot + '</span></div>';
+
+  h += '<div class="ladgrid">';
+  g.levels.forEach(function(lv) {
+    var lvDone = done['l' + lv.l];
+    h += '<div class="ladlv' + (lvDone ? ' done' : '') + '" id="ll_' + lv.l + '">';
+    h += '<div class="lvnum">' + lv.l + '</div>';
+    h += '<div class="lvinfo"><div class="lvtitle">' + lv.ch + '</div>' + (lv.pt ? '<div class="lvdesc">' + lv.pt + '</div>' : '') + '</div>';
+    if (lvDone) h += '<span class="lvdate">✓ ' + lvDone + '</span>';
+    h += '<div class="lvbtns">';
+    if (lvDone) {
+      h += '<button class="lvbtn lvun" onclick="undoLv(&quot;' + selGame + '&quot;,&quot;' + player + '&quot;,' + lv.l + ')">↩</button>';
+    } else {
+      h += '<button class="lvbtn lvdo" onclick="tryLv(&quot;' + selGame + '&quot;,&quot;' + player + '&quot;,' + lv.l + ')">✓ Geschafft!</button>';
+    }
+    h += '</div></div>';
   });
-  h+='</div><div class="divider"></div><div class="form-row"><label>Notizen</label><textarea id="gameNotes" rows="2" placeholder="Notizen zur Session..."></textarea></div></div>';
-  document.getElementById('scoreCard').innerHTML=h;
-  document.getElementById('scoreNav').style.display='flex';
-  document.getElementById('scoreNav').innerHTML='<button class="btn btn-secondary" onclick="goToStep2()">&#8592; Zurueck</button><button class="btn btn-challenge" onclick="saveChal()">&#128190; Session speichern</button>';
+  h += '</div>';
+  h += '<div class="div"></div><div class="fr"><label>Notizen zur Session</label><textarea id="gnotes" rows="2" placeholder="z.B. Level 5 beim dritten Versuch geschafft..."></textarea></div>';
+  h += '</div>';
+
+  document.getElementById('scoreCard').innerHTML = h;
+  document.getElementById('scoreNav').innerHTML =
+    '<button class="btn btn-sec" onclick="go2()">← Zurueck</button>'
+    + '<button class="btn btn-pur" onclick="saveChal()">💾 Session speichern</button>';
 }
 
-function getDF(n){return ['','&#9856;','&#9857;','&#9858;','&#9859;','&#9860;','&#9861;'][parseInt(n)]||n;}
-
-function doLv(gid,player,lv){
-  var k='lpChal_'+gid;
-  var d=JSON.parse(localStorage.getItem(k)||'{}');
-  var pk='p_'+player.toLowerCase().replace(/\s/g,'_');
-  if(!d[pk]) d[pk]={};
-  d[pk]['l'+lv]=new Date().toLocaleDateString('de-AT');
-  localStorage.setItem(k,JSON.stringify(d));
-  toast('Level '+lv+' abgeschlossen!'); buildChalEntry(); updatePills();
+// ─── PUTT INPUT HANDLERS ──────────────────────────────
+function sp(i, v) {
+  pstate[i] = v;
+  document.getElementById('pm' + i).className = 'pbtn' + (v === 1 ? ' make' : '');
+  document.getElementById('px' + i).className = 'pbtn' + (v === 0 ? ' miss' : '');
+  var mk = Object.values(pstate).filter(function(x) { return x === 1; }).length;
+  var el = document.getElementById('mkct'); if (el) el.textContent = mk;
 }
 
-function undoLv(gid,player,lv){
-  if(!confirm('Level '+lv+' wieder oeffnen?')) return;
-  var k='lpChal_'+gid;
-  var d=JSON.parse(localStorage.getItem(k)||'{}');
-  var pk='p_'+player.toLowerCase().replace(/\s/g,'_');
-  if(d[pk]) delete d[pk]['l'+lv];
-  localStorage.setItem(k,JSON.stringify(d));
-  toast('Level '+lv+' zurueckgesetzt'); buildChalEntry(); updatePills();
+function svp(i, v) {
+  vpstate[i] = v;
+  [1,2,3].forEach(function(n) { var b = document.getElementById('vp' + i + '_' + n); if (b) b.className = 'pbtn' + (n === v ? ' pick' : ''); });
+  var tot = Object.values(vpstate).reduce(function(a,b) { return a+b; }, 0);
+  var par = Object.keys(vpstate).length * 2;
+  var el = document.getElementById('vpct'); if (el) el.textContent = (tot - par >= 0 ? '+' : '') + (tot - par);
 }
 
-function saveChal(){
-  var g=CG[selGame];
-  var player=document.getElementById('playerName').value.trim();
-  var pd=getPlayerProgress(selGame,player);
-  var comp=Object.values(pd).filter(function(v){return v;}).length;
-  var notes=document.getElementById('gameNotes')&&document.getElementById('gameNotes').value||'';
-  var now=new Date();
-  saved={timestamp:now.toISOString(),date:now.toLocaleDateString('de-AT'),time:now.toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'}),player:player,gameId:selGame,gameName:g.name,score:comp,rating:'Level '+comp+'/'+g.levels.length,isChal:true,notes:notes};
-  var hist=JSON.parse(localStorage.getItem('lpPuttingHistory')||'[]');
-  hist.unshift(saved); localStorage.setItem('lpPuttingHistory',JSON.stringify(hist.slice(0,200)));
-  gData={makes:comp,notes:notes};
-  var card=document.getElementById('summaryCard');
-  card.innerHTML='<div class="result-header" style="background:linear-gradient(135deg,var(--challenge) 0%,#a05cc8 100%)"><div class="player-name">'+player+'</div><div class="game-title">'+g.name+'</div><div class="date-time">'+saved.date+', '+saved.time+'</div></div><div class="result-detail"><div class="score-result great"><div><div class="sr-label">Level erreicht</div><div class="sr-value">'+comp+' / '+g.levels.length+'</div></div><div class="sr-rating">'+Math.round(comp/g.levels.length*100)+'%</div></div>'+dr('Spieler',player)+dr('Spiel',g.name)+(notes?dr('Notizen',notes):'')+'</div>';
-  setStep(4);
-  document.getElementById('saveNav').style.display='none';
-  document.getElementById('exportBtns').style.display='flex';
-  document.getElementById('newSessBtn').style.display='block';
-  toast('Session gespeichert!');
+function updPx() {
+  var t = 0;
+  PG[selGame].dists.forEach(function(_, i) { t += parseFloat(document.getElementById('px' + i) && document.getElementById('px' + i).value || 0) || 0; });
+  var el = document.getElementById('pxtot'); if (el) el.textContent = t;
 }
 
-function sp(i,r){
-  _ps[i]=r;
-  document.getElementById('pt'+i+'m').className='pt-btn'+(r==='m'?' sm':'');
-  document.getElementById('pt'+i+'x').className='pt-btn'+(r==='x'?' ms':'');
-  var mk=Object.values(_ps).filter(function(v){return v==='m';}).length;
-  var el=document.getElementById('mkCt'); if(el) el.textContent=mk;
+function spga(id, v) {
+  pgstate[id] = v;
+  document.getElementById(id + 'm').className = 'pbtn' + (v === 1 ? ' make' : '');
+  document.getElementById(id + 'x').className = 'pbtn' + (v === 0 ? ' miss' : '');
+  var pts = 0;
+  Object.keys(pgstate).forEach(function(k) { if (pgstate[k] === 1) { var d = parseInt(k.split('_d')[1]); pts += d; } });
+  var el = document.getElementById('pgapts'); if (el) el.textContent = pts;
 }
 
-function svp(i,s){
-  _vp[i]=s;
-  [1,2,3].forEach(function(n){var b=document.getElementById('vp'+i+'_'+n);if(b)b.className='pt-btn'+(n===s?' sl':'');});
-  var tot=Object.values(_vp).reduce(function(a,b){return a+b;},0);
-  var par=Object.keys(_vp).length*2;
-  var el=document.getElementById('vpCt'); if(el) el.textContent=(tot-par>=0?'+':('' ))+(tot-par);
+function upd18() {
+  var t = 0, f = 0;
+  H18.forEach(function(hd) { var v = parseInt(document.getElementById('h18_' + hd.h) && document.getElementById('h18_' + hd.h).value || ''); if (!isNaN(v)) { t += v; f++; } });
+  var el = document.getElementById('tot18'); if (el) el.textContent = f === 18 ? t + ' Putts' : t + ' (' + f + '/18)';
 }
 
-function updProx(){
-  var t=0;
-  PG[selGame].dists.forEach(function(_,i){t+=parseFloat(document.getElementById('px'+i)&&document.getElementById('px'+i).value||0)||0;});
-  var el=document.getElementById('pxTotal'); if(el) el.textContent=t;
-}
+// ─── COLLECT DATA ─────────────────────────────────────
+function collectData() {
+  if (CG[selGame]) return true;
+  var g = PG[selGame];
+  gdata = { notes: (document.getElementById('gnotes') && document.getElementById('gnotes').value) || '' };
 
-function spga(id,r){
-  _pg[id]=r;
-  document.getElementById(id+'m').className='pt-btn'+(r==='m'?' sm':'');
-  document.getElementById(id+'x').className='pt-btn'+(r==='x'?' ms':'');
-  var pts=0;
-  Object.keys(_pg).forEach(function(k){if(_pg[k]==='m'){var d=parseInt(k.split('_d')[1]);pts+=d;}});
-  var el=document.getElementById('pgaPts'); if(el) el.textContent=pts;
-}
+  if (g.type === 'mm') {
+    if (Object.keys(pstate).length < g.dists.length) { toast('Bitte alle ' + g.dists.length + ' Putts eintragen!', 1); return false; }
+    gdata.makes = Object.values(pstate).filter(function(v) { return v === 1; }).length;
+    gdata.misses = Object.values(pstate).filter(function(v) { return v === 0; }).length;
 
-function upd18(){
-  var t=0,f=0;
-  H18.forEach(function(hd){var v=parseInt(document.getElementById('h18_'+hd.h)&&document.getElementById('h18_'+hd.h).value||'');if(!isNaN(v)){t+=v;f++;}});
-  var el=document.getElementById('tot18'); if(el) el.textContent=f===18?t+' Putts':t+' ('+f+'/18)';
-}
+  } else if (g.type === 'vp') {
+    if (Object.keys(vpstate).length < g.dists.length) { toast('Bitte alle ' + g.dists.length + ' Putts eintragen!', 1); return false; }
+    var tot = Object.values(vpstate).reduce(function(a,b) { return a+b; }, 0);
+    gdata.ts = tot; gdata.tvp = tot - g.dists.length * 2;
 
-function collectData(){
-  if(CG[selGame]) return true;
-  var g=PG[selGame];
-  gData={notes:document.getElementById('gameNotes')&&document.getElementById('gameNotes').value||''};
-  if(g.type==='mm'){
-    if(Object.keys(_ps).length<g.dists.length){toast('Bitte alle '+g.dists.length+' Putts eintragen!',1);return false;}
-    gData.makes=Object.values(_ps).filter(function(v){return v==='m';}).length;
-    gData.misses=Object.values(_ps).filter(function(v){return v==='x';}).length;
-  } else if(g.type==='vp'){
-    if(Object.keys(_vp).length<g.dists.length){toast('Bitte alle '+g.dists.length+' Putts eintragen!',1);return false;}
-    var tot=Object.values(_vp).reduce(function(a,b){return a+b;},0);
-    gData.ts=tot; gData.tvp=tot-g.dists.length*2;
-  } else if(g.type==='prox'){
-    var t=0,miss=false;
-    g.dists.forEach(function(_,i){var el=document.getElementById('px'+i);if(!el||el.value===''){miss=true;}else{t+=parseFloat(el.value)||0;}});
-    if(miss){toast('Bitte alle 12 Putts eintragen!',1);return false;} gData.tp=t;
-  } else if(g.type==='lad'){
-    var dist=document.getElementById('ldDist')&&document.getElementById('ldDist').value;
-    var balls=document.getElementById('ldBalls')&&document.getElementById('ldBalls').value;
-    if(!dist||!balls){toast('Bitte Distanz und Baelle eintragen!',1);return false;}
-    gData.ld=parseFloat(dist); gData.biz=parseInt(balls);
-    gData.lr=parseInt(document.getElementById('ldRestart')&&document.getElementById('ldRestart').value||0);
-  } else if(g.type==='pga'){
-    if(Object.keys(_pg).length<20){toast('Bitte alle 20 Putts eintragen!',1);return false;}
-    var pts=0;
-    Object.keys(_pg).forEach(function(k){if(_pg[k]==='m'){var d=parseInt(k.split('_d')[1]);pts+=d;}});
-    gData.pts=pts; gData.makes=Object.values(_pg).filter(function(v){return v==='m';}).length;
-  } else if(g.type==='18h'){
-    var t18=0,miss18=false;
-    H18.forEach(function(hd){var v=parseInt(document.getElementById('h18_'+hd.h)&&document.getElementById('h18_'+hd.h).value||'');if(isNaN(v)){miss18=true;}else{t18+=v;}});
-    if(miss18){toast('Bitte alle 18 Loecher eintragen!',1);return false;} gData.tp18=t18;
+  } else if (g.type === 'prox') {
+    var t = 0, miss = false;
+    g.dists.forEach(function(_, i) { var el = document.getElementById('px' + i); if (!el || el.value === '') miss = true; else t += parseFloat(el.value) || 0; });
+    if (miss) { toast('Bitte alle 12 Putts eintragen!', 1); return false; }
+    gdata.tp = t;
+
+  } else if (g.type === 'lad') {
+    var dv = document.getElementById('ldD') && document.getElementById('ldD').value;
+    var bv = document.getElementById('ldB') && document.getElementById('ldB').value;
+    if (!dv || !bv) { toast('Bitte Distanz und Baelle eintragen!', 1); return false; }
+    gdata.ld = parseFloat(dv); gdata.biz = parseInt(bv);
+    gdata.lr = parseInt((document.getElementById('ldR') && document.getElementById('ldR').value) || 0);
+
+  } else if (g.type === 'pga') {
+    if (Object.keys(pgstate).length < 20) { toast('Bitte alle 20 Putts eintragen!', 1); return false; }
+    var pts = 0;
+    Object.keys(pgstate).forEach(function(k) { if (pgstate[k] === 1) { var d = parseInt(k.split('_d')[1]); pts += d; } });
+    gdata.pts = pts; gdata.makes = Object.values(pgstate).filter(function(v) { return v === 1; }).length;
+
+  } else if (g.type === '18h') {
+    var t18 = 0, m18 = false;
+    H18.forEach(function(hd) { var v = parseInt(document.getElementById('h18_' + hd.h) && document.getElementById('h18_' + hd.h).value || ''); if (isNaN(v)) m18 = true; else t18 += v; });
+    if (m18) { toast('Bitte alle 18 Loecher eintragen!', 1); return false; }
+    gdata.tp18 = t18;
   }
   return true;
 }
 
-function buildSummary(){
-  var g=PG[selGame];
-  var sc=g.gs(gData); var rt=g.gr(sc); var rl=g.grl(sc);
-  var player=document.getElementById('playerName').value.trim();
-  var date=document.getElementById('sessionDate').value;
-  var su='',sd=sc;
-  if(g.type==='vp'){sd=(sc>=0?'+':'')+sc; su=' vs Par';}
-  if(g.type==='prox') su=' ft';
-  if(g.type==='lad') su=' Baelle';
-  if(g.type==='18h') su=' Putts';
-  if(g.type==='mm'||g.type==='pga') su=' Pkt';
-  var drows='';
-  if(g.type==='mm') drows=dr('Eingelocht',gData.makes)+dr('Daneben',gData.misses)+dr('Quote',Math.round(gData.makes/g.dists.length*100)+'%');
-  else if(g.type==='vp') drows=dr('Gesamtschlaege',gData.ts)+dr('Score vs Par',(sc>=0?'+':'')+sc);
-  else if(g.type==='prox') drows=dr('Gesamtdistanz',sc+' ft')+dr('Durchschnitt',(sc/12).toFixed(1)+' ft');
-  else if(g.type==='lad') drows=dr('Startdistanz',gData.ld+' ft')+dr('Baelle in Zone',gData.biz)+dr('Neustarts',gData.lr);
-  else if(g.type==='pga') drows=dr('Punkte',gData.pts)+dr('Eingelocht',gData.makes+'/20');
-  else if(g.type==='18h') drows=dr('Gesamtputts',gData.tp18)+dr('Kurs-Rekord','Willett: 25');
-  if(gData.notes) drows+=dr('Notizen',gData.notes);
-  document.getElementById('summaryCard').innerHTML='<div class="result-header"><div class="player-name">'+player+'</div><div class="game-title">'+g.src+' &ndash; '+g.name+'</div><div class="date-time">'+date+'</div></div><div class="result-detail"><div class="score-result '+rt+'"><div><div class="sr-label">Ergebnis</div><div class="sr-value">'+sd+su+'</div></div><div class="sr-rating">'+rl+'</div></div>'+drows+'</div>';
-  saved=null;
+// ─── SUMMARY BUILDER ──────────────────────────────────
+function buildSummary() {
+  var g = PG[selGame];
+  var sc = g.gs(gdata), rt = g.gr(sc), rl = g.grl(sc);
+  var player = document.getElementById('playerName').value.trim();
+  var date = document.getElementById('dateField').value;
+  var sd = sc, su = '';
+  if (g.type === 'vp') { sd = (sc >= 0 ? '+' : '') + sc; su = ' vs Par'; }
+  else if (g.type === 'prox') su = ' ft';
+  else if (g.type === 'lad') su = ' Baelle';
+  else if (g.type === '18h') su = ' Putts';
+  else if (g.type === 'mm' || g.type === 'pga') su = ' Pkt';
+
+  var drows = '';
+  if (g.type === 'mm') drows = dr('Eingelocht', gdata.makes) + dr('Daneben', gdata.misses) + dr('Quote', Math.round(gdata.makes / g.dists.length * 100) + '%');
+  else if (g.type === 'vp') drows = dr('Gesamtschlaege', gdata.ts) + dr('Score vs Par', (sc >= 0 ? '+' : '') + sc);
+  else if (g.type === 'prox') drows = dr('Gesamtdistanz', sc + ' ft') + dr('Ø pro Putt', (sc / 12).toFixed(1) + ' ft');
+  else if (g.type === 'lad') drows = dr('Startdistanz', gdata.ld + ' ft') + dr('Baelle in Zone', gdata.biz) + dr('Neustarts', gdata.lr);
+  else if (g.type === 'pga') drows = dr('Punkte', gdata.pts) + dr('Eingelocht', gdata.makes + ' / 20');
+  else if (g.type === '18h') drows = dr('Gesamtputts', gdata.tp18) + dr('Kursrekord', 'Willett: 25');
+  if (gdata.notes) drows += dr('Notizen', gdata.notes);
+
+  document.getElementById('sumCard').innerHTML =
+    '<div class="rhead"><div class="rpname">' + player + '</div><div class="rgame">' + g.src + ' – ' + g.name + '</div><div class="rdate">' + date + '</div></div>'
+    + '<div class="rdetail"><div class="banner ' + rt + '"><div><div class="bl">Ergebnis</div><div class="bv">' + sd + su + '</div></div><div class="br">' + rl + '</div></div>'
+    + drows + '</div>';
+  savedR = null;
 }
 
-function dr(l,v){return '<div class="detail-row"><span class="dr-label">'+l+'</span><span class="dr-value">'+v+'</span></div>';}
+function dr(l, v) { return '<div class="drow"><span class="dl">' + l + '</span><span class="dv">' + v + '</span></div>'; }
 
-function saveResult(){
-  if(CG[selGame]){saveChal();return;}
-  var g=PG[selGame]; var sc=g.gs(gData);
-  var player=document.getElementById('playerName').value.trim();
-  var now=new Date();
-  saved={timestamp:now.toISOString(),date:now.toLocaleDateString('de-AT'),time:now.toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'}),player:player,gameId:selGame,gameName:g.name,score:sc,rating:g.grl(sc),makes:gData.makes,misses:gData.misses,tvp:gData.tvp,tp:gData.tp,pts:gData.pts,tp18:gData.tp18,biz:gData.biz,ld:gData.ld,notes:gData.notes||''};
-  var hist=JSON.parse(localStorage.getItem('lpPuttingHistory')||'[]');
-  hist.unshift(saved); localStorage.setItem('lpPuttingHistory',JSON.stringify(hist.slice(0,200)));
-  document.getElementById('exportBtns').style.display='flex';
-  document.getElementById('newSessBtn').style.display='block';
-  document.getElementById('saveNav').style.display='none';
+// ─── CHALLENGE LEVEL FLOW ─────────────────────────────
+function tryLv(gid, player, lv) {
+  var g = CG[gid];
+  if (g.dice && g.dice.length) {
+    var roll = Math.floor(Math.random() * 6) + 1;
+    pendingLv = { gid: gid, player: player, lv: lv };
+    document.getElementById('diceEmoji').textContent = DICE_FACES[roll];
+    document.getElementById('diceTask').textContent = g.dice[roll - 1].t;
+    document.getElementById('diceModal').style.display = 'flex';
+  } else {
+    saveLv(gid, player, lv);
+    toast('Level ' + lv + ' abgeschlossen! 🏆');
+  }
+}
+
+function diceAnswer(passed) {
+  closeDice();
+  if (!pendingLv) return;
+  if (passed) {
+    saveLv(pendingLv.gid, pendingLv.player, pendingLv.lv);
+    toast('Level ' + pendingLv.lv + ' abgeschlossen! 🏆');
+  } else {
+    toast('Schade – versuch es nochmal! 💪');
+  }
+  pendingLv = null;
+}
+
+function closeDice() { document.getElementById('diceModal').style.display = 'none'; }
+
+function saveLv(gid, player, lv) {
+  var key = 'lpC_' + gid;
+  var d = JSON.parse(localStorage.getItem(key) || '{}');
+  var pk = 'p_' + player.toLowerCase().replace(/\s+/g,'_');
+  if (!d[pk]) d[pk] = {};
+  d[pk]['l' + lv] = new Date().toLocaleDateString('de-AT');
+  localStorage.setItem(key, JSON.stringify(d));
+  buildChalEntry();
+  updatePills();
+}
+
+function undoLv(gid, player, lv) {
+  if (!confirm('Level ' + lv + ' wieder oeffnen?')) return;
+  var key = 'lpC_' + gid;
+  var d = JSON.parse(localStorage.getItem(key) || '{}');
+  var pk = 'p_' + player.toLowerCase().replace(/\s+/g,'_');
+  if (d[pk]) delete d[pk]['l' + lv];
+  localStorage.setItem(key, JSON.stringify(d));
+  toast('Level ' + lv + ' zurueckgesetzt');
+  buildChalEntry();
+  updatePills();
+}
+
+function saveChal() {
+  var g = CG[selGame];
+  var player = document.getElementById('playerName').value.trim();
+  var done = getPlayerDone(selGame, player);
+  var comp = Object.keys(done).filter(function(k) { return done[k]; }).length;
+  var notes = (document.getElementById('gnotes') && document.getElementById('gnotes').value) || '';
+  var now = new Date();
+  savedR = {
+    timestamp: now.toISOString(), date: now.toLocaleDateString('de-AT'),
+    time: now.toLocaleTimeString('de-AT', {hour:'2-digit',minute:'2-digit'}),
+    player: player, gameId: selGame, gameName: g.name, score: comp,
+    rating: 'Level ' + comp + '/' + g.levels.length, isChal: true, notes: notes
+  };
+  var hist = JSON.parse(localStorage.getItem('lpHist') || '[]');
+  hist.unshift(savedR);
+  localStorage.setItem('lpHist', JSON.stringify(hist.slice(0,200)));
+
+  document.getElementById('sumCard').innerHTML =
+    '<div class="rhead" style="background:linear-gradient(135deg,var(--pur),#a05cc8)">'
+    + '<div class="rpname">' + player + '</div><div class="rgame">' + g.name + '</div>'
+    + '<div class="rdate">' + savedR.date + ', ' + savedR.time + '</div></div>'
+    + '<div class="rdetail"><div class="banner blue"><div><div class="bl">Level abgeschlossen</div><div class="bv">' + comp + ' / ' + g.levels.length + '</div></div>'
+    + '<div class="br">' + Math.round(comp / g.levels.length * 100) + '% geschafft</div></div>'
+    + dr('Spieler', player) + dr('Spiel', g.name) + (notes ? dr('Notizen', notes) : '')
+    + '</div>';
+
+  setStep(4);
+  document.getElementById('saveNav').style.display = 'none';
+  document.getElementById('exportBtns').style.display = 'flex';
+  document.getElementById('newBtn').style.display = 'block';
+  toast('Session gespeichert!');
+}
+
+// ─── SAVE PERFORMANCE RESULT ──────────────────────────
+function saveResult() {
+  if (CG[selGame]) { saveChal(); return; }
+  var g = PG[selGame];
+  var sc = g.gs(gdata);
+  var player = document.getElementById('playerName').value.trim();
+  var now = new Date();
+  savedR = {
+    timestamp: now.toISOString(), date: now.toLocaleDateString('de-AT'),
+    time: now.toLocaleTimeString('de-AT', {hour:'2-digit',minute:'2-digit'}),
+    player: player, gameId: selGame, gameName: g.name, score: sc,
+    rating: g.grl(sc),
+    makes: gdata.makes, misses: gdata.misses, tvp: gdata.tvp, tp: gdata.tp,
+    pts: gdata.pts, tp18: gdata.tp18, biz: gdata.biz, ld: gdata.ld, notes: gdata.notes || ''
+  };
+  var hist = JSON.parse(localStorage.getItem('lpHist') || '[]');
+  hist.unshift(savedR);
+  localStorage.setItem('lpHist', JSON.stringify(hist.slice(0,200)));
+  document.getElementById('exportBtns').style.display = 'flex';
+  document.getElementById('newBtn').style.display = 'block';
+  document.getElementById('saveNav').style.display = 'none';
   toast('Ergebnis gespeichert!');
 }
 
-var CSVH='Datum,Uhrzeit,Spieler,Spiel,Score,Rating,Eingelocht,Daneben,VsPar,Proximity(ft),Punkte,Putts18,BaelleZone,Notizen';
-function mkCSV(r){
-  var f=[r.date,r.time,r.player,r.gameName,r.score,r.rating,r.makes!==undefined?r.makes:'',r.misses!==undefined?r.misses:'',r.tvp!==undefined?r.tvp:'',r.tp!==undefined?r.tp:'',r.pts!==undefined?r.pts:'',r.tp18!==undefined?r.tp18:'',r.biz!==undefined?r.biz:'',r.notes||''];
-  return f.map(function(x){return '"'+String(x).replace(/"/g,'""')+'"';}).join(',');
+// ─── CSV / PDF / EMAIL ────────────────────────────────
+var CSVH = 'Datum,Uhrzeit,Spieler,Spiel,Score,Rating,Eingelocht,Daneben,VsPar,Proximity(ft),Punkte,Putts18,BaelleZone,Notizen';
+
+function mkRow(r) {
+  var f = [r.date, r.time, r.player, r.gameName, r.score, r.rating,
+    r.makes !== undefined ? r.makes : '', r.misses !== undefined ? r.misses : '',
+    r.tvp !== undefined ? r.tvp : '', r.tp !== undefined ? r.tp : '',
+    r.pts !== undefined ? r.pts : '', r.tp18 !== undefined ? r.tp18 : '',
+    r.biz !== undefined ? r.biz : '', r.notes || ''];
+  return f.map(function(x) { return '"' + String(x).replace(/"/g,'""') + '"'; }).join(',');
 }
 
-function downloadCSV(){
-  if(!saved) return;
-  dlFile(CSVH+'\n'+mkCSV(saved),'putting_'+saved.player.replace(/\s/g,'_')+'_'+saved.date.replace(/\./g,'-')+'.csv','text/csv');
+function dlCSV() {
+  if (!savedR) return;
+  dlFile(CSVH + '\n' + mkRow(savedR), 'putting_' + savedR.player.replace(/\s/g,'_') + '_' + savedR.date.replace(/\./g,'-') + '.csv', 'text/csv');
   toast('CSV heruntergeladen!');
 }
 
-function exportAllCSV(){
-  var hist=JSON.parse(localStorage.getItem('lpPuttingHistory')||'[]');
-  if(!hist.length){toast('Noch keine Daten!',1);return;}
-  dlFile([CSVH].concat(hist.map(mkCSV)).join('\n'),'lp_putting_alle.csv','text/csv');
+function exportAll() {
+  var hist = JSON.parse(localStorage.getItem('lpHist') || '[]');
+  if (!hist.length) { toast('Noch keine Daten!', 1); return; }
+  dlFile([CSVH].concat(hist.map(mkRow)).join('\n'), 'lp_putting_alle.csv', 'text/csv');
   toast('Alle Daten exportiert!');
 }
 
-function dlFile(content,name,type){
-  var b=new Blob([content],{type:type});
-  var a=document.createElement('a');
-  a.href=URL.createObjectURL(b); a.download=name; a.click();
+function dlFile(content, name, type) {
+  var b = new Blob([content], {type: type});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(b); a.download = name; a.click();
 }
 
-function downloadPDF(){
-  if(!saved) return;
-  var det='';
-  if(saved.makes!==undefined) det+='<p><b>Eingelocht:</b> '+saved.makes+'</p>';
-  if(saved.tvp!==undefined) det+='<p><b>Score vs Par:</b> '+(saved.score>=0?'+':'')+saved.score+'</p>';
-  if(saved.tp!==undefined) det+='<p><b>Gesamtdistanz:</b> '+saved.score+' ft</p>';
-  if(saved.pts!==undefined) det+='<p><b>Punkte:</b> '+saved.pts+'</p>';
-  if(saved.tp18!==undefined) det+='<p><b>Gesamtputts:</b> '+saved.tp18+'</p>';
-  if(saved.biz!==undefined) det+='<p><b>Baelle in Zone:</b> '+saved.biz+'</p>';
-  if(saved.notes) det+='<p><b>Notizen:</b> '+saved.notes+'</p>';
-  var w=window.open('','_blank');
-  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>LP Putting</title><style>body{font-family:Arial,sans-serif;max-width:500px;margin:40px auto;padding:20px;color:#1a1a2e}h1{color:#2456b4;font-size:20px}.sc{font-size:42px;font-weight:900;color:#2456b4;margin:12px 0}.ba{background:#2456b4;color:white;padding:4px 12px;border-radius:20px;font-size:12px;display:inline-block}hr{border:1px solid #d0ddf5;margin:16px 0}p{margin:6px 0;font-size:14px}footer{margin-top:30px;font-size:11px;color:#888;text-align:center}</style></head><body><h1>Lee Peregrine Golf Academy</h1><p><b>Spieler:</b> '+saved.player+'</p><p><b>Datum:</b> '+saved.date+', '+saved.time+'</p><hr><p><b>Spiel:</b> '+saved.gameName+'</p><div class="sc">'+saved.score+'</div><span class="ba">'+saved.rating+'</span><hr>'+det+'<footer>LP Golf Academy &middot; Gut Altentann &middot; Gemeinsam zu deinem besten Golf</footer><script>window.print();<\/script></body></html>');
+function dlPDF() {
+  if (!savedR) return;
+  var det = '';
+  if (savedR.makes !== undefined) det += '<p><b>Eingelocht:</b> ' + savedR.makes + '</p>';
+  if (savedR.tvp !== undefined) det += '<p><b>Score vs Par:</b> ' + ((savedR.score >= 0 ? '+' : '') + savedR.score) + '</p>';
+  if (savedR.tp !== undefined) det += '<p><b>Gesamtdistanz:</b> ' + savedR.tp + ' ft</p>';
+  if (savedR.pts !== undefined) det += '<p><b>Punkte:</b> ' + savedR.pts + '</p>';
+  if (savedR.tp18 !== undefined) det += '<p><b>Gesamtputts:</b> ' + savedR.tp18 + '</p>';
+  if (savedR.biz !== undefined) det += '<p><b>Baelle in Zone:</b> ' + savedR.biz + '</p>';
+  if (savedR.notes) det += '<p><b>Notizen:</b> ' + savedR.notes + '</p>';
+  var w = window.open('', '_blank');
+  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>LP Putting</title><style>body{font-family:Arial,sans-serif;max-width:480px;margin:40px auto;padding:20px;color:#1a1a2e}h1{color:#2456b4;font-size:18px}.sc{font-size:40px;font-weight:900;color:#2456b4;margin:10px 0}.ba{background:#2456b4;color:white;padding:3px 11px;border-radius:18px;font-size:11px;display:inline-block}hr{border:1px solid #d0ddf5;margin:14px 0}p{margin:5px 0;font-size:13px}footer{margin-top:28px;font-size:10px;color:#888;text-align:center}</style></head><body><h1>Lee Peregrine Golf Academy</h1><p><b>Spieler:</b> ' + savedR.player + '</p><p><b>Datum:</b> ' + savedR.date + ', ' + savedR.time + '</p><hr><p><b>Spiel:</b> ' + savedR.gameName + '</p><div class="sc">' + savedR.score + '</div><span class="ba">' + savedR.rating + '</span><hr>' + det + '<footer>LP Golf Academy · Gut Altentann · Gemeinsam zu deinem besten Golf</footer><script>window.print();<\/script></body></html>');
   w.document.close();
   toast('Druckvorschau geoeffnet!');
 }
 
-function sendEmail(){
-  if(!saved) return;
-  var subj=encodeURIComponent('LP Putting - '+saved.player+' - '+saved.gameName+' - '+saved.date);
-  var body=encodeURIComponent('Putting-Ergebnis - Lee Peregrine Golf Academy\n\nSpieler: '+saved.player+'\nDatum: '+saved.date+', '+saved.time+'\nSpiel: '+saved.gameName+'\nScore: '+saved.score+'\nRating: '+saved.rating+'\n'+(saved.notes?'Notizen: '+saved.notes+'\n':'')+'\n--- CSV fuer Excel ---\n'+CSVH+'\n'+mkCSV(saved));
-  window.location.href='mailto:'+COACH+'?subject='+subj+'&body='+body;
+function sendMail() {
+  if (!savedR) return;
+  var subj = encodeURIComponent('LP Putting – ' + savedR.player + ' – ' + savedR.gameName + ' – ' + savedR.date);
+  var body = encodeURIComponent(
+    'Putting-Ergebnis – Lee Peregrine Golf Academy\n\n'
+    + 'Spieler: ' + savedR.player + '\nDatum: ' + savedR.date + ', ' + savedR.time
+    + '\nSpiel: ' + savedR.gameName + '\nScore: ' + savedR.score + '\nRating: ' + savedR.rating
+    + (savedR.notes ? '\nNotizen: ' + savedR.notes : '')
+    + '\n\n--- CSV fuer Excel ---\n' + CSVH + '\n' + mkRow(savedR)
+  );
+  window.location.href = 'mailto:' + COACH + '?subject=' + subj + '&body=' + body;
   toast('E-Mail-App wird geoeffnet...');
 }
 
-function loadHistory(){
-  var hist=JSON.parse(localStorage.getItem('lpPuttingHistory')||'[]');
-  var card=document.getElementById('historyCard');
-  if(!hist.length){card.style.display='none';return;}
-  card.style.display='block';
-  document.getElementById('historyBody').innerHTML=hist.slice(0,20).map(function(r){
-    var ic=r.isChal;
-    var cls=ic?'bch':r.rating.includes('World')||r.rating.includes('PGA')||r.rating.includes('Weltklasse')?'bwc':r.rating.includes('Gross')||r.rating.includes('Sehr')?'bgr':r.rating.includes('Gut')?'bgo':'bav';
-    return '<tr><td>'+r.date+'</td><td>'+r.player+'</td><td>'+r.gameName+'</td><td><b>'+r.score+'</b></td><td><span class="badge '+cls+'">'+r.rating.substring(0,12)+'</span></td></tr>';
+// ─── HISTORY ──────────────────────────────────────────
+function loadHist() {
+  var hist = JSON.parse(localStorage.getItem('lpHist') || '[]');
+  var card = document.getElementById('histCard');
+  if (!hist.length) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+  document.getElementById('histBody').innerHTML = hist.slice(0,20).map(function(r) {
+    var ic = r.isChal;
+    var cls = ic ? 'bch' : (r.rating.includes('World') || r.rating.includes('PGA') || r.rating.includes('Welt') ? 'bwc' : r.rating.includes('Gross') || r.rating.includes('Sehr') ? 'bgr' : r.rating.includes('Gut') ? 'bgo' : 'bav');
+    return '<tr><td>' + r.date + '</td><td>' + r.player + '</td><td>' + r.gameName + '</td><td><b>' + r.score + '</b></td><td><span class="badge ' + cls + '">' + r.rating.substring(0,14) + '</span></td></tr>';
   }).join('');
 }
 
-function clearHistory(){
-  if(!confirm('Wirklich alle Ergebnisse loeschen?')) return;
-  localStorage.removeItem('lpPuttingHistory');
-  document.getElementById('historyCard').style.display='none';
+function clearHist() {
+  if (!confirm('Wirklich alle Ergebnisse loeschen?')) return;
+  localStorage.removeItem('lpHist');
+  document.getElementById('histCard').style.display = 'none';
   toast('Verlauf geloescht');
 }
 
-function newSession(){
-  selGame=null; gData={}; saved=null;
-  document.querySelectorAll('.game-btn').forEach(function(b){b.classList.remove('selected');});
-  document.getElementById('btnNext').disabled=true;
-  document.getElementById('exportBtns').style.display='none';
-  document.getElementById('newSessBtn').style.display='none';
-  document.getElementById('saveNav').style.display='flex';
-  loadHistory(); updatePills(); setStep(1);
+// ─── NEW SESSION ──────────────────────────────────────
+function newSess() {
+  selGame = null; gdata = {}; savedR = null;
+  document.querySelectorAll('.gb').forEach(function(b) { b.classList.remove('sel'); });
+  document.getElementById('btnNext').disabled = true;
+  document.getElementById('exportBtns').style.display = 'none';
+  document.getElementById('newBtn').style.display = 'none';
+  document.getElementById('saveNav').style.display = 'flex';
+  loadHist(); updatePills(); setStep(1);
 }
 
-function toast(msg,err){
-  var t=document.getElementById('toast');
-  t.textContent=msg; t.className='toast'+(err?' err':'')+' show';
-  setTimeout(function(){t.classList.remove('show');},3000);
+// ─── TOAST ────────────────────────────────────────────
+function toast(msg, err) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = err ? 'var(--red)' : 'var(--green)';
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  setTimeout(function() { t.style.transform = 'translateX(-50%) translateY(70px)'; }, 3000);
 }
 </script>
 </body>
